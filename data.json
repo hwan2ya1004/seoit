@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "teacher3",
-      "cat": "teacher",
-      "icon": "ti-award",
-      "iconClass": "purple",
-      "title": "강사 자격증 & 취업",
-      "desc": "HRD 강사 자격증 취득부터 학원·기업 강의 취업까지",
-      "level": "inter",
-      "levelText": "강사심화",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "cpp1",
       "cat": "cpp",
       "icon": "ti-code",
