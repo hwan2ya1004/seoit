@@ -726,10 +726,25 @@ const GH_REPO  = 'seoit';
 const GH_PATH  = 'data.json';
 const GH_TOKEN_KEY = 'seohiit_gh_token';
 
-// Token만 localStorage에서 관리
+// Token: Vercel 환경변수에서 자동 로드 (localStorage는 fallback)
 let GH_TOKEN = (function(){
   try { return localStorage.getItem(GH_TOKEN_KEY) || ''; } catch(e){ return ''; }
 })();
+
+async function loadTokenFromVercel(){
+  try{
+    const res = await fetch('/api/github-token');
+    if(res.ok){
+      const data = await res.json();
+      if(data.token){
+        GH_TOKEN = data.token;
+        try{ localStorage.setItem(GH_TOKEN_KEY, data.token); }catch(e){}
+        return true;
+      }
+    }
+  }catch(e){}
+  return false;
+}
 
 // 하위 호환용 래퍼 (기존 코드가 GH_CONFIG를 참조하는 곳 대응)
 const GH_CONFIG = {
@@ -1706,6 +1721,9 @@ function renderCourseTabs(){
 // 기본 데이터 로드 (data.json에서 fetch 시도 — file:// 프로토콜에서는 건너뜀)
 (async function init(){
   if(location.protocol !== 'file:'){
+    // Vercel 환경변수에서 GitHub 토큰 자동 로드
+    await loadTokenFromVercel();
+
     try{
       const res=await fetch('data.json?_='+Date.now());
       if(res.ok){
