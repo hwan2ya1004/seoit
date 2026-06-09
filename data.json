@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "spring",
-      "cat": "be",
-      "icon": "ti-leaf",
-      "iconClass": "be",
-      "title": "Spring Boot",
-      "desc": "Java 기반 기업형 백엔드 개발",
-      "level": "adv",
-      "levelText": "고급",
-      "status": "on",
-      "students": 35
-    },
-    {
       "id": "data",
       "cat": "data",
       "icon": "ti-chart-bar",
