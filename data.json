@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "vibe",
-      "cat": "startup",
-      "icon": "ti-rocket",
-      "iconClass": "coral",
-      "title": "1인 창업 바이브코딩",
-      "desc": "코딩 몰라도 OK — 40대 이상을 위한 AI 창업 실전",
-      "level": "beginner",
-      "levelText": "비전공자",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "middle1",
       "cat": "middle",
       "icon": "ti-device-desktop",
