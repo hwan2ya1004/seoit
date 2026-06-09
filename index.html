@@ -1,11 +1,1666 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=seohiit.html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>서희IT아카데미</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard','Apple SD Gothic Neo',sans-serif;color:#1a1a1a;background:#f5f5f3}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{background:#fff;border-bottom:0.5px solid rgba(0,0,0,0.1);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.logo{font-size:16px;font-weight:600;color:#1a1a1a}
+.logo span{color:#185FA5}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{font-size:14px;color:#666;cursor:pointer;text-decoration:none}
+.nav-links a:hover{color:#1a1a1a}
+.btn-primary{background:#185FA5;color:#fff;border:none;padding:8px 18px;border-radius:8px;font-size:14px;cursor:pointer;font-family:inherit}
+.btn-primary:hover{background:#0C447C}
+
+/* 수강 신청 드롭다운 */
+.enroll-wrap{position:relative}
+.enroll-dropdown{display:none;position:absolute;top:calc(100% + 10px);right:0;background:#fff;border:0.5px solid rgba(0,0,0,0.12);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.12);min-width:200px;padding:6px;z-index:200}
+.enroll-wrap:hover .enroll-dropdown,
+.enroll-wrap.open .enroll-dropdown{display:block}
+.enroll-dropdown-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;font-size:13px;color:#444;cursor:pointer;transition:background .12s;white-space:nowrap}
+.enroll-dropdown-item:hover{background:#f0f6ff;color:#185FA5}
+.enroll-dropdown-item .ed-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.enroll-dropdown-item .ed-count{margin-left:auto;font-size:11px;color:#aaa;background:#f5f5f3;padding:2px 7px;border-radius:10px}
+.enroll-dropdown-divider{height:0.5px;background:rgba(0,0,0,0.08);margin:4px 0}
+.enroll-dropdown-all{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;color:#185FA5;cursor:pointer;transition:background .12s}
+.enroll-dropdown-all:hover{background:#E6F1FB}
+
+/* LAYOUT */
+section{padding:2.5rem 2rem;max-width:960px;margin:0 auto}
+.page{display:none}
+.page.active{display:block}
+
+/* HERO */
+.hero{text-align:center;padding:4.5rem 2rem 3rem;max-width:960px;margin:0 auto}
+.badge{display:inline-block;background:#E6F1FB;color:#0C447C;font-size:12px;padding:4px 14px;border-radius:20px;margin-bottom:1.5rem;font-weight:500}
+.hero h1{font-size:36px;font-weight:700;line-height:1.3;margin-bottom:1rem;color:#1a1a1a}
+.hero h1 em{color:#185FA5;font-style:normal}
+.hero p{font-size:16px;color:#555;max-width:520px;margin:0 auto;line-height:1.9}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:2.5rem}
+.stat-card{background:#fff;border-radius:12px;padding:1.1rem;text-align:center;border:0.5px solid rgba(0,0,0,0.08)}
+.stat-card .num{font-size:22px;font-weight:700;color:#185FA5}
+.stat-card .lbl{font-size:12px;color:#888;margin-top:4px}
+
+/* FEATURE CARDS */
+.feature-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:3rem}
+.feature-card{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:1.25rem}
+.feature-card .fi{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
+.feature-card .fi.blue{background:#E6F1FB;color:#185FA5}
+.feature-card .fi.green{background:#EAF3DE;color:#3B6D11}
+.feature-card .fi.amber{background:#FAEEDA;color:#854F0B}
+.feature-card .fi.purple{background:#EEEDFE;color:#534AB7}
+.feature-card h3{font-size:14px;font-weight:600;margin-bottom:6px}
+.feature-card p{font-size:12px;color:#666;line-height:1.7}
+
+/* SECTION TITLES */
+.section-title{font-size:20px;font-weight:700;margin-bottom:0.4rem}
+.section-sub{font-size:14px;color:#666;margin-bottom:1.5rem;line-height:1.7}
+
+/* COURSE CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.course-card{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:1.25rem;cursor:pointer;transition:all .18s}
+.course-card:hover{border-color:#185FA5;transform:translateY(-2px);box-shadow:0 4px 16px rgba(24,95,165,0.1)}
+.card-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;font-size:21px}
+.card-icon.web{background:#E6F1FB;color:#185FA5}
+.card-icon.be{background:#EAF3DE;color:#3B6D11}
+.card-icon.data{background:#FAEEDA;color:#854F0B}
+.card-icon.ai{background:#EEEDFE;color:#534AB7}
+.card-icon.coral{background:#FAECE7;color:#993C1D}
+.card-icon.pink{background:#FBEAF0;color:#993356}
+.card-icon.teal{background:#E1F5EE;color:#0F6E56}
+.card-icon.purple{background:#EEEDFE;color:#534AB7}
+.tag.startup{background:#FAECE7;color:#993C1D}
+.tag.middle{background:#FBEAF0;color:#993356}
+.tag.special{background:#E1F5EE;color:#0F6E56}
+.tag.teacher{background:#EEEDFE;color:#534AB7}
+.course-card h3{font-size:14px;font-weight:600;margin-bottom:5px}
+.course-card p{font-size:12px;color:#666;line-height:1.6}
+.tag{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;margin-top:10px;font-weight:500}
+.tag.startup{background:#FAECE7;color:#993C1D}
+.tag.beginner{background:#EAF3DE;color:#3B6D11}
+.tag.inter{background:#FAEEDA;color:#854F0B}
+.tag.adv{background:#EEEDFE;color:#534AB7}
+
+/* TABS */
+.tab-bar{display:flex;gap:4px;border-bottom:0.5px solid rgba(0,0,0,0.1);margin-bottom:2rem}
+.tab{padding:10px 18px;font-size:14px;cursor:pointer;border:none;background:transparent;color:#888;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit}
+.tab.active{color:#185FA5;border-bottom-color:#185FA5;font-weight:600}
+
+/* ADMIN TABLE */
+.admin-table{width:100%;border-collapse:collapse;font-size:14px}
+.admin-table th{text-align:left;font-size:13px;font-weight:600;color:#888;padding:8px 12px;border-bottom:0.5px solid rgba(0,0,0,0.1)}
+.admin-table td{padding:11px 12px;border-bottom:0.5px solid rgba(0,0,0,0.06)}
+.admin-table tr:last-child td{border-bottom:none}
+.status{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;font-weight:500}
+.status.on{background:#EAF3DE;color:#3B6D11}
+.status.off{background:#f0efe8;color:#666}
+.status.new{background:#E6F1FB;color:#185FA5}
+.action-btn{background:transparent;border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;color:#666;font-family:inherit}
+.action-btn:hover{background:#f5f5f3}
+.action-btn.danger{border-color:rgba(192,57,43,0.3);color:#c0392b}
+.action-btn.danger:hover{background:#fdf0ee}
+
+/* DETAIL HEADER */
+.detail-header{background:#fff;border-bottom:0.5px solid rgba(0,0,0,0.1);padding:1.5rem 2rem}
+.detail-header-inner{max-width:960px;margin:0 auto}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:13px;color:#888;cursor:pointer;margin-bottom:1rem;background:none;border:none;padding:0;font-family:inherit}
+.back-btn:hover{color:#1a1a1a}
+.detail-title-row{display:flex;align-items:center;gap:16px}
+.detail-icon{width:54px;height:54px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.detail-icon.web{background:#E6F1FB;color:#185FA5}
+.detail-icon.be{background:#EAF3DE;color:#3B6D11}
+.detail-icon.data{background:#FAEEDA;color:#854F0B}
+.detail-icon.ai{background:#EEEDFE;color:#534AB7}
+.detail-title{font-size:22px;font-weight:700}
+.detail-desc{font-size:14px;color:#666;margin-top:4px}
+
+.detail-tabs{display:flex;gap:4px;border-bottom:0.5px solid rgba(0,0,0,0.1);padding:0 2rem;background:#fff}
+.detail-tab{padding:12px 20px;font-size:14px;cursor:pointer;border:none;background:transparent;color:#888;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;display:flex;align-items:center;gap:6px}
+.detail-tab.active{color:#185FA5;border-bottom-color:#185FA5;font-weight:600}
+.detail-section{display:none}
+.detail-section.active{display:block}
+
+/* CURRICULUM */
+.curriculum-week{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;margin-bottom:10px;overflow:hidden}
+.curriculum-week-header{padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer}
+.curriculum-week-header:hover{background:#fafafa}
+.week-badge{background:#E6F1FB;color:#185FA5;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.week-title{font-size:14px;font-weight:600;flex:1}
+.week-topics{padding:0 18px 14px;display:none}
+.week-topics.open{display:block}
+.topic-item{display:flex;align-items:center;gap:8px;padding:7px 0;font-size:13px;color:#555;border-top:0.5px solid rgba(0,0,0,0.06)}
+.topic-item:first-child{border-top:none}
+.topic-item i{font-size:14px;color:#185FA5;flex-shrink:0}
+
+/* YOUTUBE */
+.yt-keyword-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.yt-kw{padding:5px 14px;font-size:12px;border-radius:20px;border:0.5px solid rgba(0,0,0,0.15);background:#fff;cursor:pointer;color:#555;transition:all .15s;font-family:inherit}
+.yt-kw.active{background:#185FA5;color:#fff;border-color:#185FA5}
+.yt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.yt-card{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;overflow:hidden;text-decoration:none;display:block;transition:all .15s}
+.yt-card:hover{border-color:#185FA5;transform:translateY(-1px)}
+.yt-thumb{position:relative;width:100%;aspect-ratio:16/9;background:#eee;overflow:hidden}
+.yt-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.22)}
+.yt-play i{font-size:32px;color:#fff}
+.yt-info{padding:10px 13px}
+.yt-info h3{font-size:12px;font-weight:500;line-height:1.5;color:#1a1a1a;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:3px}
+.yt-meta{font-size:11px;color:#888}
+.yt-loading{padding:2rem;text-align:center;color:#888;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+.yt-error{padding:1.5rem;background:#f5f5f3;border-radius:10px;font-size:14px;color:#888;border:0.5px solid rgba(0,0,0,0.08)}
+
+/* JOBS */
+.job-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-bottom:2rem}
+.job-link-card{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:1.25rem;text-decoration:none;display:flex;align-items:center;gap:14px;transition:all .15s}
+.job-link-card:hover{border-color:#185FA5;transform:translateY(-1px)}
+.job-site-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.job-site-icon.saramin{background:#E6F1FB;color:#185FA5}
+.job-site-icon.jobkorea{background:#FCEBEB;color:#A32D2D}
+.job-site-icon.wanted{background:#EAF3DE;color:#3B6D11}
+.job-link-info h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.job-link-info p{font-size:12px;color:#888}
+.job-keywords{display:flex;flex-wrap:wrap;gap:8px}
+.job-kw{display:inline-block;background:#f5f5f3;color:#555;font-size:12px;padding:4px 12px;border-radius:20px;border:0.5px solid rgba(0,0,0,0.08)}
+.gov-kw-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.5rem}
+.gov-kw{padding:6px 16px;font-size:13px;border-radius:20px;border:0.5px solid rgba(0,0,0,0.15);background:#fff;cursor:pointer;color:#555;transition:all .15s;font-family:inherit}
+.gov-kw.active{background:#993C1D;color:#fff;border-color:#993C1D}
+.gov-card{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:12px;padding:1.25rem;margin-bottom:12px}
+.gov-card h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.gov-card p{font-size:13px;color:#555;line-height:1.7;margin-bottom:12px}
+.gov-badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.gov-badge.blue{background:#E6F1FB;color:#185FA5}
+.gov-badge.green{background:#EAF3DE;color:#3B6D11}
+.gov-badge.amber{background:#FAEEDA;color:#854F0B}
+.gov-badge.coral{background:#FAECE7;color:#993C1D}
+.gov-info-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.gov-info-item{font-size:12px;color:#666;background:#f5f5f3;padding:4px 10px;border-radius:8px;border:0.5px solid rgba(0,0,0,0.08)}
+.gov-link{display:inline-flex;align-items:center;gap:6px;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;transition:background .15s}
+.gov-link.blue{background:#185FA5}.gov-link.blue:hover{background:#0C447C}
+.gov-link.coral{background:#993C1D}.gov-link.coral:hover{background:#712B13}
+.gov-link.green{background:#3B6D11}.gov-link.green:hover{background:#27500A}
+.gov-link.amber{background:#854F0B}.gov-link.amber:hover{background:#633806}
+
+/* POPULAR RANK BADGE */
+.course-card{position:relative}
+.rank-badge{position:absolute;top:-8px;left:-8px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;z-index:2;box-shadow:0 2px 6px rgba(0,0,0,0.15)}
+.rank-badge.rank-1{background:#FFD700;color:#7A5800}
+.rank-badge.rank-2{background:#C0C0C0;color:#444}
+.rank-badge.rank-3{background:#CD7F32;color:#fff}
+.pop-score{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#888;margin-top:6px}
+.pop-score i{font-size:12px;color:#185FA5}
+
+/* FOOTER */
+footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2rem;margin-top:2rem}
+.footer-inner{max-width:960px;margin:0 auto}
+.footer-brand{font-size:16px;font-weight:700;margin-bottom:1rem}
+.footer-brand span{color:#185FA5}
+.footer-info{font-size:12px;color:#888;line-height:2.2}
+.footer-info a{color:#888}
+.footer-info a:hover{color:#1a1a1a}
+.footer-copy{margin-top:1rem;font-size:12px;color:#aaa}
+.footer-admin-link{margin-top:1.2rem;font-size:11px;color:#ccc}
+.footer-admin-link a{color:#ccc;cursor:pointer;text-decoration:none}
+.footer-admin-link a:hover{color:#999}
+
+/* NEW BADGE */
+.new-badge{display:inline-flex;align-items:center;justify-content:center;background:#c0392b;color:#fff;font-size:11px;font-weight:700;min-width:18px;height:18px;border-radius:9px;padding:0 5px;margin-left:6px;vertical-align:middle;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+.new-alert-bar{background:#FFF0F0;border:0.5px solid #F5C6C6;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:13px;color:#c0392b;display:flex;align-items:center;gap:10px;cursor:pointer}
+.new-alert-bar i{font-size:18px;flex-shrink:0}
+.new-alert-bar:hover{background:#FFE8E8}
+
+/* ADMIN MODAL (로그인) */
+.admin-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:999;align-items:center;justify-content:center}
+.admin-modal-overlay.open{display:flex}
+.admin-modal{background:#fff;border-radius:16px;padding:2rem;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,0.18)}
+.admin-modal h2{font-size:18px;font-weight:700;margin-bottom:0.4rem}
+.admin-modal p{font-size:13px;color:#888;margin-bottom:1.5rem}
+.admin-modal input{width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:10px 14px;font-size:14px;font-family:inherit;outline:none;margin-bottom:0.75rem}
+.admin-modal input:focus{border-color:#185FA5}
+.admin-modal label{font-size:12px;color:#666;display:block;margin-bottom:4px;margin-top:4px}
+.admin-modal-error{font-size:12px;color:#c0392b;margin-bottom:0.75rem;display:none}
+.admin-modal-btns{display:flex;gap:8px}
+.admin-modal-btns button{flex:1;padding:10px;border-radius:10px;font-size:14px;font-family:inherit;cursor:pointer;border:none}
+.btn-cancel{background:#f5f5f3;color:#666}
+.btn-cancel:hover{background:#eee}
+.btn-confirm{background:#185FA5;color:#fff}
+.btn-confirm:hover{background:#0C447C}
+
+/* CRUD MODAL */
+.crud-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1000;align-items:flex-start;justify-content:center;padding:2rem 1rem;overflow-y:auto}
+.crud-overlay.open{display:flex}
+.crud-modal{background:#fff;border-radius:16px;padding:2rem;width:100%;max-width:480px;box-shadow:0 8px 40px rgba(0,0,0,0.18);margin:auto}
+.crud-modal h2{font-size:18px;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:8px}
+.form-group{margin-bottom:1rem}
+.form-group label{font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none;background:#fff}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#185FA5}
+.form-group textarea{resize:vertical;min-height:70px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.crud-btns{display:flex;gap:8px;margin-top:1.5rem}
+.crud-btns button{flex:1;padding:10px;border-radius:10px;font-size:14px;font-family:inherit;cursor:pointer;border:none;font-weight:500}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;opacity:0;transition:all .3s;z-index:2000;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.success{background:#3B6D11}
+.toast.error{background:#c0392b}
+
+/* ADMIN HEADER */
+.admin-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:12px}
+.admin-header-left .section-title{margin-bottom:0.2rem}
+.admin-header-left .section-sub{margin-bottom:0}
+.admin-header-right{display:flex;gap:8px;align-items:center}
+.admin-sync-info{font-size:12px;color:#aaa;display:flex;align-items:center;gap:5px}
+
+/* STATUS BADGE CLICKABLE */
+.status-toggle{cursor:pointer;transition:opacity .15s}
+.status-toggle:hover{opacity:0.75}
+
+/* LOADING SPINNER */
+.admin-loading{padding:3rem;text-align:center;color:#888;font-size:14px}
+.admin-loading i{font-size:24px;display:block;margin-bottom:8px;color:#185FA5}
+
+/* GITHUB CONFIG NOTICE */
+.github-notice{background:#FFF8E1;border:0.5px solid #F9A825;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:13px;color:#7A5800;display:flex;align-items:flex-start;gap:10px}
+.github-notice i{font-size:18px;flex-shrink:0;margin-top:1px}
+.github-notice a{color:#185FA5;text-decoration:underline;cursor:pointer}
+
+/* ENROLL PAGE */
+.enroll-page-hero{background:linear-gradient(135deg,#E6F1FB 0%,#f5f5f3 100%);border-radius:16px;padding:2.5rem 2rem;margin-bottom:2rem;text-align:center}
+.enroll-page-hero h2{font-size:24px;font-weight:700;margin-bottom:0.5rem;color:#1a1a1a}
+.enroll-page-hero p{font-size:14px;color:#555;line-height:1.8}
+.enroll-form-card{background:#fff;border:0.5px solid rgba(0,0,0,0.08);border-radius:16px;padding:2rem;max-width:520px;margin:0 auto}
+.enroll-form-card h3{font-size:17px;font-weight:700;margin-bottom:0.3rem;display:flex;align-items:center;gap:8px}
+.enroll-form-card .sub{font-size:13px;color:#888;margin-bottom:1.75rem}
+.enroll-field{margin-bottom:1.1rem}
+.enroll-field label{display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:5px}
+.enroll-field input,.enroll-field select{width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:10px 14px;font-size:14px;font-family:inherit;outline:none;background:#fff;color:#1a1a1a}
+.enroll-field input:focus,.enroll-field select:focus{border-color:#185FA5;box-shadow:0 0 0 3px rgba(24,95,165,0.08)}
+.enroll-submit{width:100%;background:#185FA5;color:#fff;border:none;border-radius:10px;padding:13px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;margin-top:0.5rem;transition:background .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.enroll-submit:hover{background:#0C447C}
+.enroll-info-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:1.5rem;justify-content:center}
+.enroll-info-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#666;background:#f5f5f3;padding:6px 14px;border-radius:20px;border:0.5px solid rgba(0,0,0,0.08)}
+.enroll-info-item i{color:#185FA5;font-size:14px}
+.enroll-success{display:none;text-align:center;padding:2rem 1rem}
+.enroll-success .check-icon{width:64px;height:64px;background:#EAF3DE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:28px;color:#3B6D11}
+.enroll-success h3{font-size:18px;font-weight:700;margin-bottom:0.5rem}
+.enroll-success p{font-size:14px;color:#666;line-height:1.8;margin-bottom:1.5rem}
+.enroll-success .btn-back{background:#185FA5;color:#fff;border:none;border-radius:10px;padding:10px 24px;font-size:14px;font-family:inherit;cursor:pointer;font-weight:600}
+.enroll-success .btn-back:hover{background:#0C447C}
+</style>
 </head>
 <body>
-<script>window.location.replace('seohiit.html');</script>
+
+<nav>
+  <div class="logo">서희<span>IT아카데미</span></div>
+  <div class="nav-links">
+    <a onclick="showPage('main')">홈</a>
+    <a onclick="showPage('courses')">강의</a>
+    <a onclick="showPage('about')">소개</a>
+    <div class="enroll-wrap" id="enroll-wrap">
+      <button class="btn-primary" onclick="toggleEnrollDropdown(event)">수강 신청 <i class="ti ti-chevron-down" style="font-size:11px;margin-left:2px;vertical-align:middle"></i></button>
+      <div class="enroll-dropdown" id="enroll-dropdown"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- 홈 -->
+<div id="page-main" class="page active">
+  <div class="hero">
+    <span class="badge">체계적 커리큘럼 + 궁금한 것 바로 배우기 · 중년 · 특성화고 · 강사양성</span>
+    <h1>만들고 싶은 것을<br><em>바로</em> 만드세요</h1>
+    <p>IT 전공자부터 중년 비전공자, 특성화고 학생, 강사를 꿈꾸는 분까지 —<br>누구든 자신의 속도로 배울 수 있는 맞춤형 온라인 강의를 제공합니다.</p>
+  </div>
+  <section>
+    <div class="stats-row">
+      <div class="stat-card"><div class="num">2,400+</div><div class="lbl">수료생</div></div>
+      <div class="stat-card"><div class="num">94%</div><div class="lbl">취업률</div></div>
+      <div class="stat-card"><div class="num" id="main-course-count">18개</div><div class="lbl">강의 과정</div></div>
+      <div class="stat-card"><div class="num">4.8★</div><div class="lbl">평균 만족도</div></div>
+    </div>
+    <div class="section-title">서희IT아카데미만의 방식</div>
+    <div class="section-sub">정해진 틀이 아닌, 내가 원하는 방향으로 배웁니다</div>
+    <div class="feature-row">
+      <div class="feature-card"><div class="fi blue"><i class="ti ti-list-check"></i></div><h3>체계적인 커리큘럼</h3><p>입문부터 실무까지 단계별로 설계된 커리큘럼으로 탄탄하게 기초를 다집니다.</p></div>
+      <div class="feature-card"><div class="fi green"><i class="ti ti-message-question"></i></div><h3>궁금한 것 위주 강의</h3><p>모르는 게 생기면 바로 질문하고 바로 배웁니다. 내가 막힌 부분을 중심으로 강의가 진행됩니다.</p></div>
+      <div class="feature-card"><div class="fi amber"><i class="ti ti-device-laptop"></i></div><h3>중년·비전공자 환경</h3><p>왕초보도 따라올 수 있는 속도와 언어로 가르칩니다. 포기하지 않도록 함께 갑니다.</p></div>
+      <div class="feature-card"><div class="fi purple"><i class="ti ti-school"></i></div><h3>특성화고 · 강사 양성</h3><p>고교생 자격증·대회 준비부터 IT 강사 양성까지 — 진로별 맞춤 트랙을 제공합니다.</p></div>
+    </div>
+    <div class="section-title">인기 강의</div>
+    <div class="section-sub">클릭하면 커리큘럼과 유튜브 강의, 채용 정보를 바로 볼 수 있어요 · 클릭·검색 횟수 기반 실시간 순위</div>
+    <div class="card-grid" id="popular-grid"></div>
+  </section>
+</div>
+
+<!-- 강의 목록 -->
+<div id="page-courses" class="page">
+  <section>
+    <div class="section-title">전체 강의</div>
+    <div class="section-sub">체계적인 커리큘럼 강의부터 궁금한 것만 골라 듣는 맞춤 강의까지 — 강의를 클릭하면 커리큘럼과 채용 정보를 볼 수 있어요</div>
+    <div class="tab-bar" id="course-tabs">
+      <button class="tab active" data-cat="all">전체</button>
+      <button class="tab" data-cat="web">웹 프론트엔드</button>
+      <button class="tab" data-cat="be">백엔드</button>
+      <button class="tab" data-cat="data">데이터</button>
+      <button class="tab" data-cat="ai">AI/ML</button>
+      <button class="tab" data-cat="startup">1인 창업</button>
+      <button class="tab" data-cat="middle">중년 과정</button>
+      <button class="tab" data-cat="special">특성화고</button>
+      <button class="tab" data-cat="teacher">강사 양성</button>
+      <button class="tab" data-cat="cpp">C++</button>
+    </div>
+    <div id="course-list" class="card-grid"></div>
+  </section>
+</div>
+
+<!-- 강의 상세 -->
+<div id="page-detail" class="page">
+  <div class="detail-header">
+    <div class="detail-header-inner">
+      <button class="back-btn" onclick="showPage('courses')"><i class="ti ti-arrow-left"></i> 강의 목록으로</button>
+      <div class="detail-title-row">
+        <div class="detail-icon" id="d-icon"></div>
+        <div><div class="detail-title" id="d-title"></div><div class="detail-desc" id="d-desc"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="detail-tabs">
+    <button class="detail-tab active" onclick="switchDetailTab(this,'curriculum')"><i class="ti ti-list-check"></i> 커리큘럼</button>
+    <button class="detail-tab" onclick="switchDetailTab(this,'youtube')"><i class="ti ti-brand-youtube"></i> 유튜브 강의</button>
+    <button class="detail-tab" id="tab-btn-support" onclick="switchDetailTab(this,'jobs')"><i class="ti ti-briefcase"></i> 채용 정보</button>
+  </div>
+  <section>
+    <div id="tab-curriculum" class="detail-section active"><div id="curriculum-content"></div></div>
+    <div id="tab-youtube" class="detail-section">
+      <div class="yt-keyword-tabs" id="yt-kw-tabs"></div>
+      <div id="yt-result"></div>
+    </div>
+    <div id="tab-jobs" class="detail-section">
+      <div id="jobs-normal">
+        <div class="section-title" style="margin-bottom:0.5rem">채용 사이트 바로가기</div>
+        <div class="section-sub">아래를 클릭하면 해당 직무 채용 공고를 바로 볼 수 있어요</div>
+        <div class="job-links" id="job-links"></div>
+        <div class="section-title" style="margin-bottom:0.75rem;font-size:16px">주요 기술 키워드</div>
+        <div class="job-keywords" id="job-keywords"></div>
+      </div>
+      <div id="jobs-gov" style="display:none">
+        <div class="section-title" style="margin-bottom:0.5rem">국가 지원 사업 찾기</div>
+        <div class="section-sub">키워드를 선택하면 관련 국가 지원 정보 페이지로 바로 연결됩니다</div>
+        <div class="gov-kw-tabs" id="gov-kw-tabs">
+          <button class="gov-kw active" data-type="work24">고용24 직업훈련</button>
+          <button class="gov-kw" data-type="kdigital">K-Digital Training</button>
+          <button class="gov-kw" data-type="sbiz">소상공인 지원</button>
+          <button class="gov-kw" data-type="startup">창업진흥원</button>
+        </div>
+        <div id="gov-content"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 수강 신청 -->
+<div id="page-enroll" class="page">
+  <section>
+    <div class="enroll-page-hero">
+      <span class="badge"><i class="ti ti-pencil" style="font-size:11px"></i> 간편 수강 신청</span>
+      <h2>수강 신청하기</h2>
+      <p>아래 양식을 작성해 주시면 담당자가 확인 후<br>1~2 영업일 내에 연락드립니다.</p>
+    </div>
+
+    <div class="enroll-form-card" id="enroll-form-wrap">
+      <h3><i class="ti ti-clipboard-list" style="color:#185FA5"></i> 신청서 작성</h3>
+      <p class="sub">* 표시 항목은 필수 입력입니다</p>
+
+      <div class="enroll-field">
+        <label>이름 *</label>
+        <input type="text" id="enroll-name" placeholder="예: 홍길동">
+      </div>
+      <div class="enroll-field">
+        <label>연락처 *</label>
+        <input type="tel" id="enroll-phone" placeholder="예: 010-1234-5678">
+      </div>
+      <div class="enroll-field">
+        <label>수강 희망 강의 *</label>
+        <select id="enroll-course">
+          <option value="">강의를 선택해 주세요</option>
+        </select>
+      </div>
+
+      <button class="enroll-submit" onclick="submitEnroll()">
+        <i class="ti ti-send"></i> 수강 신청하기
+      </button>
+
+      <div class="enroll-info-row">
+        <div class="enroll-info-item"><i class="ti ti-phone"></i> 070-4177-1210</div>
+        <div class="enroll-info-item"><i class="ti ti-mail"></i> seohilab@naver.com</div>
+        <div class="enroll-info-item"><i class="ti ti-clock"></i> 평일 09:00 ~ 18:00</div>
+      </div>
+    </div>
+
+    <div class="enroll-form-card enroll-success" id="enroll-success-wrap">
+      <div class="check-icon"><i class="ti ti-check"></i></div>
+      <h3>신청이 완료되었습니다!</h3>
+      <p>담당자가 확인 후 <strong>1~2 영업일 내</strong>에<br>입력하신 연락처로 연락드리겠습니다.<br><br>문의사항은 <strong>070-4177-1210</strong>으로 전화 주세요.</p>
+      <button class="btn-back" onclick="resetEnrollForm()">다른 강의 신청하기</button>
+    </div>
+  </section>
+</div>
+
+<!-- 소개 -->
+<div id="page-about" class="page">
+  <section>
+    <div class="section-title">서희IT아카데미 소개</div>
+    <div class="section-sub">저희는 2018년부터 "만들고 싶은 것을 바로 만든다"는 철학으로 운영해 왔습니다.<br>체계적인 커리큘럼을 기반으로 하되, 수강생이 막히는 부분과 궁금한 것을 중심으로 강의를 유연하게 이끌어 갑니다.<br>일방적으로 듣는 강의가 아니라, 함께 만들어가는 강의입니다.</div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="num">7년</div><div class="lbl">운영 경력</div></div>
+      <div class="stat-card"><div class="num">30명+</div><div class="lbl">현직 강사진</div></div>
+      <div class="stat-card"><div class="num">50개+</div><div class="lbl">협력 기업</div></div>
+    </div>
+    <div class="section-title" style="margin-bottom:0.5rem">우리가 다른 이유</div>
+    <div class="section-sub">획일화된 강의 대신, 수강생 개개인의 속도와 관심사에 맞춰 진행합니다</div>
+    <div class="card-grid">
+      <div class="course-card"><div class="card-icon web"><i class="ti ti-message-question"></i></div><h3>질문 중심 강의</h3><p>궁금한 것이 생기면 바로 질문하고 그 자리에서 해결합니다. 이해가 될 때까지 반복합니다.</p></div>
+      <div class="course-card"><div class="card-icon be"><i class="ti ti-list-check"></i></div><h3>체계적인 커리큘럼</h3><p>기초부터 실무까지 탄탄하게 설계된 로드맵으로 실력의 빈틈 없이 성장합니다.</p></div>
+      <div class="course-card"><div class="card-icon ai"><i class="ti ti-users"></i></div><h3>소수 정예 수업</h3><p>최대 20명 클래스로 강사와 수강생 간 긴밀한 소통이 가능합니다.</p></div>
+      <div class="course-card"><div class="card-icon data"><i class="ti ti-briefcase"></i></div><h3>취업까지 연계</h3><p>수료 후 협력사 채용 연계와 포트폴리오 피드백으로 취업을 실질적으로 지원합니다.</p></div>
+    </div>
+  </section>
+</div>
+
+<!-- 관리자 -->
+<div id="page-admin" class="page">
+  <section>
+    <div class="admin-header-row">
+      <div class="admin-header-left">
+        <div class="section-title">관리자 대시보드</div>
+        <div class="section-sub" style="margin-bottom:0">강의 및 수강생 관리</div>
+      </div>
+      <div class="admin-header-right">
+        <span class="admin-sync-info" id="sync-info"><i class="ti ti-cloud"></i> <span id="sync-text">GitHub 연동 대기</span></span>
+        <button class="action-btn" onclick="exportData()" style="display:flex;align-items:center;gap:5px"><i class="ti ti-download"></i> 내보내기</button>
+        <button class="action-btn" onclick="loadAdminData(true)" style="display:flex;align-items:center;gap:5px"><i class="ti ti-refresh"></i> 새로고침</button>
+        <button class="btn-primary" onclick="openCourseModal()"><i class="ti ti-plus"></i> 강의 추가</button>
+      </div>
+    </div>
+
+    <div id="github-notice" class="github-notice" style="display:none">
+      <i class="ti ti-alert-triangle"></i>
+      <div>GitHub 저장소 정보가 설정되지 않았습니다. <a onclick="openGithubConfig()">여기를 클릭</a>해서 저장소와 Token을 설정하면 데이터가 GitHub에 저장됩니다. 설정 전까지는 메모리에만 저장됩니다.</div>
+    </div>
+
+    <div class="stats-row" style="margin-bottom:2rem" id="admin-stats">
+      <div class="stat-card"><div class="num" id="stat-students">-</div><div class="lbl">이번 달 수강생</div></div>
+      <div class="stat-card"><div class="num" id="stat-courses">-</div><div class="lbl">운영 중 강의</div></div>
+      <div class="stat-card"><div class="num" id="stat-new">-</div><div class="lbl">신규 신청</div></div>
+      <div class="stat-card"><div class="num" id="stat-completion">-</div><div class="lbl">완강률</div></div>
+    </div>
+
+    <div id="new-enroll-alert" class="new-alert-bar" style="display:none" onclick="goToNewStudents()">
+      <i class="ti ti-bell-ringing"></i>
+      <div><strong id="new-enroll-count">0</strong>명의 신규 수강 신청이 있습니다! 클릭하여 확인하세요.</div>
+    </div>
+
+    <div class="tab-bar">
+      <button class="tab active" onclick="adminTab(this,'admin-courses')">강의 관리</button>
+      <button class="tab" id="tab-students-btn" onclick="adminTab(this,'admin-students')">수강생 관리</button>
+      <button class="tab" id="tab-settings-btn" onclick="adminTab(this,'admin-settings')"><i class="ti ti-settings" style="font-size:13px;margin-right:4px"></i>GitHub 설정</button>
+    </div>
+
+    <!-- 강의 관리 -->
+    <div id="admin-courses">
+      <div id="admin-courses-loading" class="admin-loading"><i class="ti ti-loader"></i>데이터 불러오는 중...</div>
+      <div id="admin-courses-table" style="display:none">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
+          <input type="text" id="course-search" placeholder="강의명 검색..." style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:7px 12px;font-size:13px;font-family:inherit;outline:none;width:220px" oninput="renderAdminCourses()">
+          <span style="font-size:13px;color:#888" id="course-count-label"></span>
+        </div>
+        <table class="admin-table">
+          <thead><tr><th>강의명</th><th>카테고리</th><th>수강생</th><th>상태</th><th>관리</th></tr></thead>
+          <tbody id="admin-courses-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 수강생 관리 -->
+    <div id="admin-students" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:8px">
+        <input type="text" id="student-search" placeholder="이름 또는 강의명 검색..." style="border:0.5px solid rgba(0,0,0,0.15);border-radius:8px;padding:7px 12px;font-size:13px;font-family:inherit;outline:none;width:240px" oninput="renderAdminStudents()">
+        <button class="btn-primary" style="font-size:13px;padding:7px 14px" onclick="openStudentModal()"><i class="ti ti-plus"></i> 수강생 추가</button>
+      </div>
+      <table class="admin-table">
+        <thead><tr><th>이름</th><th>연락처</th><th>수강 강의</th><th>신청일</th><th>상태</th><th>관리</th></tr></thead>
+        <tbody id="admin-students-tbody"></tbody>
+      </table>
+    </div>
+
+    <!-- GitHub 설정 -->
+    <div id="admin-settings" style="display:none">
+      <div style="max-width:520px">
+        <div class="section-title" style="font-size:16px;margin-bottom:0.4rem">GitHub 저장소 설정</div>
+        <div class="section-sub" style="margin-bottom:1.5rem">데이터를 GitHub에 저장하면 Vercel 배포 후에도 데이터가 유지됩니다.</div>
+        <div class="form-group">
+          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">GitHub 사용자명 (owner) *</label>
+          <input type="text" id="cfg-owner" placeholder="예: hwan2ya1004" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
+        </div>
+        <div class="form-group">
+          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">저장소 이름 (repo) *</label>
+          <input type="text" id="cfg-repo" placeholder="예: seoit" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
+        </div>
+        <div class="form-group">
+          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">파일 경로 (path)</label>
+          <input type="text" id="cfg-path" placeholder="data.json" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="data.json">
+        </div>
+        <div class="form-group">
+          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">Personal Access Token *</label>
+          <input type="password" id="cfg-token" placeholder="ghp_..." style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
+        </div>
+        <div id="cfg-result" style="display:none;font-size:13px;padding:10px 14px;background:#f5f5f3;border-radius:8px;margin-bottom:1rem"></div>
+        <div style="display:flex;gap:8px">
+          <button class="action-btn" onclick="testGithubConnection()" style="flex:1;padding:10px;font-size:14px"><i class="ti ti-plug"></i> 연결 테스트</button>
+          <button class="btn-primary" onclick="saveGithubConfig()" style="flex:1;padding:10px;font-size:14px"><i class="ti ti-device-floppy"></i> 설정 저장</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">서희<span>IT아카데미</span></div>
+    <div class="footer-info">
+      상호명: 서희연구소 &nbsp;|&nbsp; 대표자: 김성환<br>
+      사업자등록번호: 832-29-01692 (간이과세자) &nbsp;|&nbsp; 통신판매업 신고번호: 제2026-화성동탄-2143호<br>
+      주소: 경기도 화성시 동탄순환대로17길 15, 2423동 802호<br>
+      연락처: 070-4177-1210 &nbsp;|&nbsp; 이메일: <a href="mailto:seohilab@naver.com">seohilab@naver.com</a>
+    </div>
+    <div class="footer-copy">© 2026 서희연구소. All rights reserved.</div>
+    <div class="footer-admin-link"><a onclick="openAdminModal()">관리자</a></div>
+  </div>
+</footer>
+
+<!-- 관리자 로그인 모달 -->
+<div class="admin-modal-overlay" id="admin-modal-overlay" onclick="closeAdminModal(event)">
+  <div class="admin-modal">
+    <h2><i class="ti ti-lock" style="font-size:18px;margin-right:6px;color:#185FA5"></i>관리자 로그인</h2>
+    <p>관리자 비밀번호를 입력해 주세요</p>
+    <input type="password" id="admin-pw-input" placeholder="비밀번호" onkeydown="if(event.key==='Enter')confirmAdmin()">
+    <div class="admin-modal-error" id="admin-modal-error">비밀번호가 올바르지 않습니다.</div>
+    <div class="admin-modal-btns">
+      <button class="btn-cancel" onclick="closeAdminModal()">취소</button>
+      <button class="btn-confirm" onclick="confirmAdmin()">확인</button>
+    </div>
+  </div>
+</div>
+
+<!-- 강의 추가/수정 모달 -->
+<div class="crud-overlay" id="course-modal-overlay" onclick="closeCourseModal(event)">
+  <div class="crud-modal">
+    <h2 id="course-modal-title"><i class="ti ti-book" style="color:#185FA5"></i> 강의 추가</h2>
+    <input type="hidden" id="course-edit-id">
+    <div class="form-group">
+      <label>강의명 *</label>
+      <input type="text" id="cf-title" placeholder="예: React 풀스택">
+    </div>
+    <div class="form-group">
+      <label>강의 설명 *</label>
+      <textarea id="cf-desc" placeholder="강의에 대한 간단한 설명"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>카테고리 *</label>
+        <select id="cf-cat">
+          <option value="web">웹 프론트엔드</option>
+          <option value="be">백엔드</option>
+          <option value="data">데이터</option>
+          <option value="ai">AI/ML</option>
+          <option value="startup">1인 창업</option>
+          <option value="middle">중년 과정</option>
+          <option value="special">특성화고</option>
+          <option value="teacher">강사 양성</option>
+          <option value="cpp">C++</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>난이도 *</label>
+        <select id="cf-level">
+          <option value="beginner">입문</option>
+          <option value="inter">중급</option>
+          <option value="adv">고급</option>
+          <option value="middle">왕초보</option>
+          <option value="special">고교생</option>
+          <option value="teacher">강사입문</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>아이콘 클래스 (Tabler)</label>
+        <input type="text" id="cf-icon" placeholder="예: ti-brand-react">
+      </div>
+      <div class="form-group">
+        <label>아이콘 색상</label>
+        <select id="cf-iconClass">
+          <option value="web">파랑 (web)</option>
+          <option value="be">초록 (be)</option>
+          <option value="data">주황 (data)</option>
+          <option value="ai">보라 (ai)</option>
+          <option value="coral">코랄 (coral)</option>
+          <option value="pink">핑크 (pink)</option>
+          <option value="teal">청록 (teal)</option>
+          <option value="purple">퍼플 (purple)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>상태</label>
+        <select id="cf-status">
+          <option value="on">운영 중</option>
+          <option value="off">준비 중</option>
+          <option value="new">신규</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>수강생 수</label>
+        <input type="number" id="cf-students" placeholder="0" min="0" value="0">
+      </div>
+    </div>
+    <div class="crud-btns">
+      <button class="btn-cancel" onclick="closeCourseModal()">취소</button>
+      <button class="btn-confirm" onclick="saveCourse()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- 수강생 추가/수정 모달 -->
+<div class="crud-overlay" id="student-modal-overlay" onclick="closeStudentModal(event)">
+  <div class="crud-modal">
+    <h2 id="student-modal-title"><i class="ti ti-user-plus" style="color:#185FA5"></i> 수강생 추가</h2>
+    <input type="hidden" id="student-edit-id">
+    <div class="form-group">
+      <label>이름 *</label>
+      <input type="text" id="sf-name" placeholder="예: 홍길동">
+    </div>
+    <div class="form-group">
+      <label>수강 강의 *</label>
+      <select id="sf-course"></select>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>신청일 *</label>
+        <input type="date" id="sf-date">
+      </div>
+      <div class="form-group">
+        <label>상태</label>
+        <select id="sf-status">
+          <option value="new">신규</option>
+          <option value="on">수강 중</option>
+          <option value="off">수료</option>
+        </select>
+      </div>
+    </div>
+    <div class="crud-btns">
+      <button class="btn-cancel" onclick="closeStudentModal()">취소</button>
+      <button class="btn-confirm" onclick="saveStudent()">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── GitHub 설정 ── */
+const GH_STORAGE_KEY = 'seohiit_gh_config';
+let GH_CONFIG = (function(){
+  try {
+    const saved = localStorage.getItem(GH_STORAGE_KEY);
+    if(saved) return JSON.parse(saved);
+  } catch(e){}
+  return {
+    owner: 'hwan2ya1004',
+    repo: 'seoit',
+    path: 'data.json',
+    token: ''
+  };
+})();
+
+/* ── 앱 데이터 ── */
+let COURSES = [
+  {"id":"html","cat":"web","icon":"ti-brand-html5","iconClass":"web","title":"HTML/CSS 기초","desc":"웹 개발 첫걸음, 레이아웃과 스타일링","level":"beginner","levelText":"입문","status":"on","students":12},
+  {"id":"js","cat":"web","icon":"ti-brand-javascript","iconClass":"web","title":"JavaScript 심화","desc":"ES6+, 비동기, DOM 조작 마스터","level":"inter","levelText":"중급","status":"on","students":20},
+  {"id":"react","cat":"web","icon":"ti-brand-react","iconClass":"web","title":"React 풀스택","desc":"React + Node.js + DB로 실제 서비스 만들기","level":"inter","levelText":"중급","status":"on","students":48},
+  {"id":"nodejs","cat":"be","icon":"ti-server","iconClass":"be","title":"Node.js 백엔드","desc":"Express, REST API, JWT 인증 구현","level":"inter","levelText":"중급","status":"on","students":15},
+  {"id":"django","cat":"be","icon":"ti-brand-python","iconClass":"be","title":"Django REST API","desc":"Python으로 만드는 백엔드 서비스","level":"inter","levelText":"중급","status":"on","students":10},
+  {"id":"spring","cat":"be","icon":"ti-leaf","iconClass":"be","title":"Spring Boot","desc":"Java 기반 기업형 백엔드 개발","level":"adv","levelText":"고급","status":"on","students":35},
+  {"id":"data","cat":"data","icon":"ti-chart-bar","iconClass":"data","title":"데이터 분석 입문","desc":"Python, Pandas로 데이터 다루기","level":"beginner","levelText":"입문","status":"off","students":0},
+  {"id":"sql","cat":"data","icon":"ti-database","iconClass":"data","title":"SQL & 데이터베이스","desc":"MySQL, PostgreSQL 실전 쿼리 작성","level":"beginner","levelText":"입문","status":"off","students":0},
+  {"id":"ml","cat":"ai","icon":"ti-brain","iconClass":"ai","title":"머신러닝 기초","desc":"Scikit-learn으로 배우는 ML 알고리즘","level":"inter","levelText":"중급","status":"off","students":0},
+  {"id":"ai","cat":"ai","icon":"ti-robot","iconClass":"ai","title":"딥러닝 / PyTorch","desc":"신경망 설계부터 모델 배포까지","level":"adv","levelText":"고급","status":"on","students":22},
+  {"id":"vibe","cat":"startup","icon":"ti-rocket","iconClass":"coral","title":"1인 창업 바이브코딩","desc":"코딩 몰라도 OK — 40대 이상을 위한 AI 창업 실전","level":"beginner","levelText":"비전공자","status":"off","students":0},
+  {"id":"middle1","cat":"middle","icon":"ti-device-desktop","iconClass":"pink","title":"중년을 위한 컴퓨터 기초","desc":"마우스부터 인터넷까지 — 처음 시작하는 디지털 생활","level":"middle","levelText":"왕초보","status":"off","students":0},
+  {"id":"middle2","cat":"middle","icon":"ti-brand-office","iconClass":"pink","title":"스마트폰 & 엑셀 활용","desc":"일상과 업무에 바로 쓰는 스마트폰·문서 작성 스킬","level":"middle","levelText":"왕초보","status":"off","students":0},
+  {"id":"middle3","cat":"middle","icon":"ti-sparkles","iconClass":"pink","title":"중년을 위한 AI 활용법","desc":"ChatGPT·AI 도구로 업무와 생활을 스마트하게","level":"middle","levelText":"입문","status":"off","students":0},
+  {"id":"special1","cat":"special","icon":"ti-school","iconClass":"teal","title":"특성화고 웹개발 기초","desc":"고교 특성화 과정 연계 — HTML/CSS/JS 입문","level":"special","levelText":"고교생","status":"off","students":0},
+  {"id":"special3","cat":"special","icon":"ti-trophy","iconClass":"teal","title":"SW 경진대회 대비","desc":"전국 기능경기·SW올림피아드 출전 준비 과정","level":"special","levelText":"고교생","status":"off","students":0},
+  {"id":"teacher1","cat":"teacher","icon":"ti-chalkboard","iconClass":"purple","title":"IT 강사 입문 과정","desc":"처음 강단에 서는 강사를 위한 강의 설계·전달력 훈련","level":"teacher","levelText":"강사입문","status":"off","students":0},
+  {"id":"teacher2","cat":"teacher","icon":"ti-presentation","iconClass":"purple","title":"온라인 강의 제작","desc":"OBS·편집 툴로 나만의 온라인 강의 콘텐츠 만들기","level":"teacher","levelText":"강사심화","status":"off","students":0},
+  {"id":"teacher3","cat":"teacher","icon":"ti-award","iconClass":"purple","title":"강사 자격증 & 취업","desc":"HRD 강사 자격증 취득부터 학원·기업 강의 취업까지","level":"inter","levelText":"강사심화","status":"off","students":0},
+  {"id":"cpp1","cat":"cpp","icon":"ti-code","iconClass":"be","title":"C++ 기초 입문","desc":"변수·조건문·반복문부터 함수까지 — C++ 첫걸음","level":"beginner","levelText":"입문","status":"new","students":0},
+  {"id":"cpp2","cat":"cpp","icon":"ti-cpu","iconClass":"be","title":"C++ 객체지향 프로그래밍","desc":"클래스·상속·다형성으로 배우는 OOP 핵심 개념","level":"inter","levelText":"중급","status":"new","students":0},
+  {"id":"cpp3","cat":"cpp","icon":"ti-tournament","iconClass":"be","title":"C++ 자료구조 & 알고리즘","desc":"STL 컨테이너와 정렬·탐색·그래프 알고리즘 실전","level":"adv","levelText":"고급","status":"new","students":0}
+];
+let STUDENTS = [
+  {"id":"s1","name":"김민준","course":"React 풀스택","courseId":"react","date":"2025.06.01","status":"new"},
+  {"id":"s2","name":"이서연","course":"Spring Boot","courseId":"spring","date":"2025.05.28","status":"on"},
+  {"id":"s3","name":"박지호","course":"딥러닝 / PyTorch","courseId":"ai","date":"2025.05.20","status":"on"},
+  {"id":"s4","name":"최유진","course":"데이터 분석 입문","courseId":"data","date":"2025.04.10","status":"off"}
+];
+let dataFileSha = ''; // GitHub 파일 SHA (업데이트 시 필요)
+
+/* ── 강의 상세 데이터 (정적) ── */
+const COURSE_DETAIL = {
+  html:{curriculum:[{week:'1주차',title:'웹의 구조 이해',topics:['HTML 기본 태그와 문서 구조','시맨틱 태그 (header, main, footer)','폼 요소와 입력 태그']},{week:'2주차',title:'CSS 스타일링 기초',topics:['선택자와 속성','박스 모델, 마진, 패딩','색상, 폰트, 텍스트 스타일']},{week:'3주차',title:'레이아웃',topics:['Flexbox 완전 정복','CSS Grid 레이아웃','반응형 디자인 (미디어 쿼리)']},{week:'4주차',title:'실전 프로젝트',topics:['포트폴리오 페이지 제작','랜딩 페이지 클론 코딩','배포 (GitHub Pages)']}],ytKeywords:['HTML CSS 강의 입문','CSS Flexbox 강의','반응형 웹 디자인 강의'],jobKeyword:'HTML CSS 퍼블리셔',jobTitle:'웹 퍼블리셔',jobKeywords:['HTML5','CSS3','Flexbox','Grid','반응형 웹','SCSS']},
+  js:{curriculum:[{week:'1주차',title:'JavaScript 기초',topics:['변수, 데이터 타입, 연산자','조건문과 반복문','함수 선언과 화살표 함수']},{week:'2주차',title:'객체와 배열',topics:['객체 생성과 메서드','배열 메서드 (map, filter, reduce)','구조 분해 할당, 스프레드']},{week:'3주차',title:'비동기 처리',topics:['콜백 함수와 Promise','async / await','Fetch API로 서버 통신']},{week:'4주차',title:'DOM & 실전',topics:['DOM 조작과 이벤트 처리','로컬 스토리지 활용','미니 프로젝트 (투두리스트)']}],ytKeywords:['JavaScript 강의 입문','자바스크립트 비동기 강의','ES6 강의'],jobKeyword:'자바스크립트 프론트엔드',jobTitle:'프론트엔드 개발자',jobKeywords:['JavaScript','ES6+','TypeScript','DOM','비동기','REST API']},
+  react:{curriculum:[{week:'1~2주차',title:'React 기초',topics:['컴포넌트와 JSX','props와 state','이벤트 핸들링']},{week:'3~4주차',title:'Hooks & 상태관리',topics:['useState, useEffect','useContext, useRef','Redux / Zustand 기초']},{week:'5~6주차',title:'백엔드 연동',topics:['Node.js + Express API 서버','MongoDB / MySQL 연동','JWT 인증 구현']},{week:'7~8주차',title:'배포 & 프로젝트',topics:['Vercel / AWS 배포','풀스택 쇼핑몰 프로젝트','코드 리뷰 및 피드백']}],ytKeywords:['React 강의 2024','리액트 풀스택 강의','React hooks 강의'],jobKeyword:'React 프론트엔드 개발자',jobTitle:'프론트엔드 개발자 (React)',jobKeywords:['React','Next.js','TypeScript','Redux','Node.js','REST API']},
+  nodejs:{curriculum:[{week:'1주차',title:'Node.js 기초',topics:['Node.js 환경 설정','모듈 시스템 (CommonJS, ESM)','파일 시스템 처리']},{week:'2주차',title:'Express 서버',topics:['라우팅과 미들웨어','요청/응답 처리','에러 핸들링']},{week:'3주차',title:'데이터베이스 연동',topics:['MySQL / MongoDB 연결','ORM (Sequelize, Mongoose)','CRUD API 구현']},{week:'4주차',title:'인증 & 배포',topics:['JWT 토큰 인증','REST API 설계 원칙','AWS EC2 배포']}],ytKeywords:['Node.js 강의 입문','Express.js 강의','Node.js REST API 강의'],jobKeyword:'Node.js 백엔드 개발자',jobTitle:'백엔드 개발자 (Node.js)',jobKeywords:['Node.js','Express','REST API','JWT','MongoDB','MySQL']},
+  django:{curriculum:[{week:'1주차',title:'Django 기초',topics:['Django 프로젝트 구조','모델, 뷰, 템플릿 (MVT)','ORM과 데이터베이스']},{week:'2주차',title:'Django REST Framework',topics:['시리얼라이저','APIView와 ViewSet','인증 (Token, JWT)']},{week:'3주차',title:'고급 기능',topics:['필터링, 페이지네이션','파일 업로드 처리','Celery 비동기 처리']},{week:'4주차',title:'배포 & 프로젝트',topics:['Docker 컨테이너화','AWS / GCP 배포','API 문서화 (Swagger)']}],ytKeywords:['Django 강의 입문','Django REST API 강의','파이썬 장고 강의'],jobKeyword:'Django Python 백엔드',jobTitle:'백엔드 개발자 (Python)',jobKeywords:['Python','Django','DRF','REST API','PostgreSQL','Docker']},
+  spring:{curriculum:[{week:'1~2주차',title:'Spring Boot 기초',topics:['IoC, DI 개념','Spring MVC 구조','JPA / Hibernate ORM']},{week:'3~4주차',title:'실전 API 개발',topics:['RESTful API 설계','Spring Security 인증','예외 처리와 로깅']},{week:'5~6주차',title:'고급 & 아키텍처',topics:['MSA 기초','Redis 캐싱','Kafka 메시지 큐 기초']},{week:'7~8주차',title:'배포 & 프로젝트',topics:['Docker / Kubernetes 기초','CI/CD 파이프라인','기업형 쇼핑몰 API 프로젝트']}],ytKeywords:['Spring Boot 강의','스프링 부트 JPA 강의','자바 스프링 강의'],jobKeyword:'Spring Boot Java 백엔드',jobTitle:'백엔드 개발자 (Java)',jobKeywords:['Java','Spring Boot','JPA','MySQL','REST API','MSA']},
+  data:{curriculum:[{week:'1주차',title:'Python & 환경 설정',topics:['Python 기초 문법','Jupyter Notebook 사용법','Numpy 배열 처리']},{week:'2주차',title:'Pandas 데이터 처리',topics:['DataFrame 생성과 조작','결측치 처리','그룹화와 집계']},{week:'3주차',title:'데이터 시각화',topics:['Matplotlib 기초','Seaborn 그래프','대시보드 만들기']},{week:'4주차',title:'실전 분석 프로젝트',topics:['공공 데이터 분석','EDA (탐색적 데이터 분석)','분석 보고서 작성']}],ytKeywords:['파이썬 데이터분석 강의','Pandas 강의 입문','데이터 시각화 강의'],jobKeyword:'데이터 분석가',jobTitle:'데이터 분석가',jobKeywords:['Python','Pandas','Numpy','Matplotlib','SQL','Tableau']},
+  sql:{curriculum:[{week:'1주차',title:'SQL 기초',topics:['데이터베이스 개념','SELECT, WHERE, ORDER BY','집계 함수 (COUNT, SUM, AVG)']},{week:'2주차',title:'JOIN & 서브쿼리',topics:['INNER / LEFT / RIGHT JOIN','서브쿼리와 WITH절','인덱스와 성능 최적화']},{week:'3주차',title:'고급 SQL',topics:['윈도우 함수','트랜잭션과 잠금','저장 프로시저']},{week:'4주차',title:'실전 프로젝트',topics:['MySQL / PostgreSQL 설치','실전 데이터 모델링','쿼리 최적화 실습']}],ytKeywords:['SQL 강의 입문','MySQL 강의','데이터베이스 강의'],jobKeyword:'SQL 데이터베이스',jobTitle:'DBA / 데이터 엔지니어',jobKeywords:['SQL','MySQL','PostgreSQL','Oracle','데이터 모델링','ETL']},
+  ml:{curriculum:[{week:'1주차',title:'머신러닝 개요',topics:['지도학습 vs 비지도학습','회귀와 분류 개념','Scikit-learn 환경 설정']},{week:'2주차',title:'주요 알고리즘',topics:['선형 회귀, 로지스틱 회귀','결정 트리, 랜덤 포레스트','SVM, KNN']},{week:'3주차',title:'모델 평가 & 튜닝',topics:['교차 검증','하이퍼파라미터 튜닝','특성 중요도 분석']},{week:'4주차',title:'실전 프로젝트',topics:['Kaggle 데이터셋 분석','모델 성능 비교','Flask API로 모델 서빙']}],ytKeywords:['머신러닝 강의 입문','사이킷런 강의','머신러닝 알고리즘 강의'],jobKeyword:'머신러닝 엔지니어',jobTitle:'ML 엔지니어',jobKeywords:['Python','Scikit-learn','머신러닝','TensorFlow','데이터 전처리','모델 서빙']},
+  vibe:{curriculum:[{week:'1주차',title:'바이브코딩 시작하기',topics:['코딩 전혀 몰라도 되는 이유','AI가 코드를 대신 써주는 원리','Cursor·Bolt·v0 — 어떤 툴을 써야 하나']},{week:'2주차',title:'AI로 내 서비스 만들기',topics:['말로 설명하면 만들어지는 웹사이트','회원가입·결제 없이 Supabase로 DB 연결','클릭 몇 번으로 인터넷에 올리기 (Vercel)']},{week:'3주차',title:'돈 버는 구조 만들기',topics:['결제 연결하기 (토스페이먼츠·카카오페이)','블로그·뉴스레터로 고객 모으기','유료 구독·디지털 상품 판매 설계']},{week:'4주차',title:'나만의 창업 서비스 완성',topics:['아이디어 → 실제 서비스 출시까지','SNS 자동 홍보 설정','월 수익 목표 설정과 운영 루틴']}],ytKeywords:['바이브코딩 강의 비전공자','AI 창업 만들기 초보','노코드 창업 강의'],isVibe:true},
+  ai:{curriculum:[{week:'1~2주차',title:'딥러닝 기초',topics:['신경망 구조 이해','PyTorch 기초 문법','순전파와 역전파']},{week:'3~4주차',title:'CNN & 이미지 처리',topics:['합성곱 신경망 (CNN)','이미지 분류 실습','전이 학습 (Transfer Learning)']},{week:'5~6주차',title:'NLP & Transformer',topics:['RNN, LSTM 기초','Transformer 구조','HuggingFace 모델 활용']},{week:'7~8주차',title:'배포 & 프로젝트',topics:['모델 경량화 (ONNX)','FastAPI로 AI 서비스 배포','LLM 파인튜닝 기초']}],ytKeywords:['딥러닝 강의 PyTorch','파이토치 강의 입문','딥러닝 AI 강의'],jobKeyword:'딥러닝 AI 엔지니어',jobTitle:'AI / 딥러닝 엔지니어',jobKeywords:['PyTorch','TensorFlow','딥러닝','CNN','NLP','LLM','MLOps']},
+  middle1:{curriculum:[{week:'1주차',title:'컴퓨터 첫걸음',topics:['컴퓨터 켜고 끄기, 마우스 사용법','바탕화면과 파일 관리','인터넷 브라우저 사용법']},{week:'2주차',title:'인터넷 활용',topics:['검색 잘 하는 방법','이메일 만들고 보내기','유튜브·뉴스 즐기기']},{week:'3주차',title:'문서 기초',topics:['한글/워드 기본 작성','문서 저장하고 인쇄하기','폰트·글자 크기 조절']},{week:'4주차',title:'생활 속 디지털',topics:['카카오톡 PC 버전 활용','사진 정리와 저장','온라인 민원·쇼핑 안전하게']}],ytKeywords:['중년 컴퓨터 기초 강의','컴퓨터 처음 배우기','인터넷 사용법 강의'],jobKeyword:'디지털 활용 시니어',jobTitle:'디지털 역량 강화',jobKeywords:['컴퓨터기초','인터넷','이메일','한글문서','디지털생활']},
+  middle2:{curriculum:[{week:'1주차',title:'스마트폰 완전 정복',topics:['앱 설치와 삭제','카카오톡·네이버 활용','사진 찍고 공유하기']},{week:'2주차',title:'엑셀 기초',topics:['셀 입력과 서식','합계·평균 수식','표 만들기와 인쇄']},{week:'3주차',title:'엑셀 실전',topics:['가계부 만들기','차트 그리기','데이터 정렬·필터']},{week:'4주차',title:'실생활 디지털 업무',topics:['키오스크 사용법','모바일 뱅킹 안전하게','화상회의 (줌·카카오) 참여하기']}],ytKeywords:['스마트폰 활용법 강의','엑셀 기초 강의 중년','시니어 디지털 교육'],jobKeyword:'사무 보조 엑셀 활용',jobTitle:'사무 보조 / 디지털 활용',jobKeywords:['스마트폰','엑셀','카카오톡','모바일뱅킹','키오스크','화상회의']},
+  middle3:{curriculum:[{week:'1주차',title:'AI가 뭐길래?',topics:['ChatGPT 가입하고 써보기','AI에게 질문 잘 하는 법','일상에서 AI 활용 사례']},{week:'2주차',title:'업무에 AI 적용하기',topics:['AI로 문서·이메일 초안 작성','AI로 번역·요약하기','엑셀 데이터 AI로 분석']},{week:'3주차',title:'AI 이미지·영상',topics:['AI로 사진 만들기 (미드저니·Canva)','AI 영상 편집 툴 사용법','SNS용 콘텐츠 만들기']},{week:'4주차',title:'AI 창업 아이디어',topics:['AI로 블로그·유튜브 운영','나만의 AI 자동화 루틴','AI 시대 재취업·부업 전략']}],ytKeywords:['중년 AI 활용법','ChatGPT 강의 입문','시니어 AI 교육'],jobKeyword:'디지털 전환 AI 활용',jobTitle:'AI 활용 전문가',jobKeywords:['ChatGPT','AI활용','자동화','Canva','미드저니','디지털전환']},
+  special1:{curriculum:[{week:'1~2주차',title:'HTML 기초',topics:['웹페이지 구조 이해','태그와 속성 사용법','폼·테이블·링크 만들기']},{week:'3~4주차',title:'CSS 스타일링',topics:['선택자와 속성','Flexbox 레이아웃','반응형 웹 기초']},{week:'5~6주차',title:'JavaScript 입문',topics:['변수와 조건문','DOM 조작 기초','간단한 이벤트 처리']},{week:'7~8주차',title:'포트폴리오 제작',topics:['나만의 소개 페이지 만들기','GitHub에 올리기','특성화고 대회 준비']}],ytKeywords:['HTML CSS 강의 고등학생','웹개발 입문 강의','특성화고 웹개발'],jobKeyword:'웹개발 신입',jobTitle:'웹개발자 (신입)',jobKeywords:['HTML','CSS','JavaScript','GitHub','반응형웹']},
+  special3:{curriculum:[{week:'1~2주차',title:'알고리즘 기초',topics:['정렬·탐색 알고리즘','재귀·동적 프로그래밍','시간복잡도 이해']},{week:'3~4주차',title:'실전 문제 풀이',topics:['백준·프로그래머스 기출','유형별 집중 훈련','코드 최적화 전략']},{week:'5~6주차',title:'대회 유형 심화',topics:['그래프·트리 탐색','구현·시뮬레이션 유형','팀 프로젝트 협업']},{week:'7~8주차',title:'모의 대회 & 피드백',topics:['실전 모의 대회 2회','코드 리뷰 및 개선','대회 당일 전략']}],ytKeywords:['SW 경진대회 준비','알고리즘 강의 고등학생','코딩 대회 준비'],jobKeyword:'SW개발 신입 공채',jobTitle:'SW 개발자',jobKeywords:['알고리즘','Python','C++','백준','경진대회','SW올림피아드']},
+  teacher1:{curriculum:[{week:'1주차',title:'강사란 무엇인가',topics:['IT 강사의 역할과 시장','강의 설계 기초 (ADDIE 모델)','학습자 분석과 목표 설정']},{week:'2주차',title:'강의 콘텐츠 설계',topics:['커리큘럼 구성 방법','학습 목표 작성법','교안·PPT 제작 실습']},{week:'3주차',title:'전달력 훈련',topics:['목소리·발음·속도 조절','질문 받는 법·판서 기술','모의 강의 실습 + 피드백']},{week:'4주차',title:'강의 현장 적응',topics:['수강생 관리와 분위기 조성','돌발 상황 대처법','강의 평가·개선 방법']}],ytKeywords:['IT 강사 되는 법','강의 잘 하는 방법','온라인 강의 만들기'],jobKeyword:'IT 강사 강의',jobTitle:'IT 강사 / 교육 강사',jobKeywords:['강의설계','교안작성','HRD','ADDIE','강사자격증','퍼실리테이션']},
+  teacher2:{curriculum:[{week:'1주차',title:'온라인 강의 기획',topics:['플랫폼 선택 (유튜브·클래스101·인프런)','강의 주제 선정과 수익화 전략','강의 구성안 작성']},{week:'2주차',title:'촬영 환경 구축',topics:['카메라·조명·마이크 세팅','OBS 설치와 화면 구성','녹화 세팅과 음질 개선']},{week:'3주차',title:'영상 편집',topics:['다빈치 리졸브·프리미어 기초','자막·효과·썸네일 제작','강의 영상 최적화 포맷']},{week:'4주차',title:'업로드 & 운영',topics:['플랫폼별 업로드 방법','SEO 최적화와 노출 전략','수강생 피드백 관리']}],ytKeywords:['온라인 강의 만들기','OBS 강의 촬영','유튜브 강의 제작'],jobKeyword:'온라인 강의 제작 강사',jobTitle:'온라인 강의 크리에이터',jobKeywords:['OBS','영상편집','프리미어','강의제작','유튜브','클래스101']},
+  teacher3:{curriculum:[{week:'1~2주차',title:'HRD 강사 자격증',topics:['직업능력개발훈련 교사 자격 이해','자격 취득 요건과 서류 준비','훈련기관 등록 프로세스']},{week:'3~4주차',title:'기업 강의 진입',topics:['기업 교육 시장 이해','제안서·포트폴리오 작성','강사 에이전시·플랫폼 등록']},{week:'5~6주차',title:'학원·대학 강의',topics:['학원 강사 채용 프로세스','대학 평생교육원 강사 지원','커리큘럼 제출 및 심사 준비']},{week:'7~8주차',title:'강사 브랜딩',topics:['블로그·SNS 강사 브랜딩','강의 후기 관리와 레퍼런스 쌓기','수익 다각화 (강의·컨설팅·책)']}],ytKeywords:['HRD 강사 자격증','강사 취업 방법','IT 강사 되는 법'],jobKeyword:'HRD 직업훈련 강사',jobTitle:'직업훈련 강사 / 기업 강사',jobKeywords:['HRD','직업훈련교사','강사자격증','기업교육','평생교육','강사취업']},
+  cpp1:{curriculum:[{week:'1주차',title:'C++ 환경 설정 & 기초 문법',topics:['Visual Studio / VS Code 설치 및 설정','Hello World — 첫 번째 C++ 프로그램','변수, 데이터 타입 (int, double, char, string)']},{week:'2주차',title:'제어 흐름',topics:['조건문 (if, else if, switch)','반복문 (for, while, do-while)','break, continue, 중첩 반복문']},{week:'3주차',title:'함수와 배열',topics:['함수 선언·정의·호출','매개변수와 반환값','배열과 다차원 배열']},{week:'4주차',title:'포인터 & 참조',topics:['포인터 개념과 주소 연산자','포인터와 배열의 관계','참조(Reference) 변수 활용']}],ytKeywords:['C++ 강의 입문','C++ 기초 강의','씨플플 강의 초보'],jobKeyword:'C++ 개발자 신입',jobTitle:'C++ 개발자 (신입)',jobKeywords:['C++','포인터','배열','함수','알고리즘','자료구조']},
+  cpp2:{curriculum:[{week:'1주차',title:'클래스와 객체',topics:['클래스 선언과 객체 생성','생성자(Constructor)와 소멸자(Destructor)','접근 제어자 (public, private, protected)']},{week:'2주차',title:'상속과 다형성',topics:['상속(Inheritance) 개념과 활용','가상 함수(virtual)와 오버라이딩','순수 가상 함수와 추상 클래스']},{week:'3주차',title:'연산자 오버로딩 & 템플릿',topics:['연산자 오버로딩','함수 템플릿과 클래스 템플릿','STL 컨테이너 기초 (vector, map)']},{week:'4주차',title:'메모리 관리 & 실전',topics:['동적 메모리 할당 (new, delete)','스마트 포인터 (unique_ptr, shared_ptr)','OOP 설계 미니 프로젝트']}],ytKeywords:['C++ 객체지향 강의','C++ 클래스 강의','C++ OOP 강의'],jobKeyword:'C++ 객체지향 개발자',jobTitle:'C++ 소프트웨어 개발자',jobKeywords:['C++','OOP','클래스','상속','STL','스마트포인터']},
+  cpp3:{curriculum:[{week:'1~2주차',title:'STL 완전 정복',topics:['vector, list, deque','map, set, unordered_map','iterator와 알고리즘 헤더 활용']},{week:'3~4주차',title:'정렬 & 탐색 알고리즘',topics:['버블·선택·삽입·퀵·병합 정렬','이진 탐색과 투 포인터','우선순위 큐 (힙) 활용']},{week:'5~6주차',title:'그래프 & 트리',topics:['BFS / DFS 구현','다익스트라·벨만-포드 최단 경로','트리 순회와 이진 탐색 트리']},{week:'7~8주차',title:'동적 프로그래밍 & 실전',topics:['DP 개념과 메모이제이션','대표 DP 문제 유형 풀이','백준·프로그래머스 C++ 실전 풀이']}],ytKeywords:['C++ 자료구조 강의','C++ 알고리즘 강의','C++ STL 강의'],jobKeyword:'C++ 알고리즘 개발자',jobTitle:'시스템 / 임베디드 개발자',jobKeywords:['C++','STL','자료구조','알고리즘','그래프','동적프로그래밍']},
+};
+
+let currentCourseId=null, currentYtQuery='';
+
+/* ── 카테고리 / 상태 레이블 (전역 상수) ── */
+const CAT_LABELS={web:'웹 프론트엔드',be:'백엔드',data:'데이터',ai:'AI/ML',startup:'1인 창업',middle:'중년 과정',special:'특성화고',teacher:'강사 양성',cpp:'C++'};
+
+/* ── 인기 강의 순위 시스템 ── */
+const POP_KEY='seohiit_pop';
+function getPopData(){try{return JSON.parse(localStorage.getItem(POP_KEY)||'{}')}catch{return{}}}
+function savePopData(d){localStorage.setItem(POP_KEY,JSON.stringify(d))}
+function addClick(id){const d=getPopData();d['c_'+id]=(d['c_'+id]||0)+1;savePopData(d);renderPopular();}
+function addSearch(id){const d=getPopData();d['s_'+id]=(d['s_'+id]||0)+1;savePopData(d);renderPopular();}
+function getScore(id){const d=getPopData();return (d['c_'+id]||0)*1+(d['s_'+id]||0)*2;}
+
+function renderPopular(){
+  const ranked=[...COURSES].sort((a,b)=>getScore(b.id)-getScore(a.id)).slice(0,8);
+  const medals=['🥇','🥈','🥉'];
+  document.getElementById('popular-grid').innerHTML=ranked.map((c,i)=>{
+    const score=getScore(c.id);
+    const rankBadge=i<3?`<div class="rank-badge rank-${i+1}">${medals[i]}</div>`:'';
+    const scoreTxt=score>0?`<div class="pop-score"><i class="ti ti-flame"></i>${score}점</div>`:'';
+    return `<div class="course-card" onclick="openCourse('${c.id}')" style="padding-top:${i<3?'1.6rem':'1.25rem'}">
+      ${rankBadge}
+      <div class="card-icon ${c.iconClass}"><i class="ti ${c.icon}"></i></div>
+      <h3>${c.title}</h3><p>${c.desc}</p>
+      <span class="tag ${c.level}">${c.levelText}</span>${scoreTxt}
+    </div>`;
+  }).join('');
+}
+
+function showPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+n).classList.add('active');
+  window.scrollTo(0,0);
+  if(n==='admin') loadAdminData();
+}
+
+/* ── 강의 목록 렌더링 ── */
+function renderCourses(cat){
+  const list = cat==='all' ? COURSES : COURSES.filter(c=>c.cat===cat);
+  document.getElementById('course-list').innerHTML = list.map(c=>`
+    <div class="course-card" onclick="openCourse('${c.id}')">
+      <div class="card-icon ${c.iconClass}"><i class="ti ${c.icon}"></i></div>
+      <h3>${c.title}</h3><p>${c.desc}</p>
+      <span class="tag ${c.level}">${c.levelText}</span>
+    </div>`).join('');
+}
+
+document.getElementById('course-tabs').addEventListener('click',e=>{
+  const btn=e.target.closest('.tab');if(!btn)return;
+  document.querySelectorAll('#course-tabs .tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');renderCourses(btn.dataset.cat);
+});
+
+/* ── 강의 상세 ── */
+function openCourse(id){
+  const c=COURSES.find(x=>x.id===id), d=COURSE_DETAIL[id];
+  if(!c||!d)return;
+  addClick(id);
+  currentCourseId=id;
+  document.getElementById('d-icon').className='detail-icon '+c.iconClass;
+  document.getElementById('d-icon').innerHTML=`<i class="ti ${c.icon}"></i>`;
+  document.getElementById('d-title').textContent=c.title;
+  document.getElementById('d-desc').textContent=c.desc;
+  document.getElementById('curriculum-content').innerHTML=d.curriculum.map((w,i)=>`
+    <div class="curriculum-week">
+      <div class="curriculum-week-header" onclick="toggleWeek(${i})">
+        <span class="week-badge">${w.week}</span>
+        <span class="week-title">${w.title}</span>
+        <i class="ti ti-chevron-down" id="chevron-${i}" style="font-size:16px;color:#888;transition:transform .2s"></i>
+      </div>
+      <div class="week-topics" id="week-${i}">${w.topics.map(t=>`<div class="topic-item"><i class="ti ti-circle-check"></i>${t}</div>`).join('')}</div>
+    </div>`).join('');
+  currentYtQuery=d.ytKeywords[0];
+  document.getElementById('yt-kw-tabs').innerHTML=d.ytKeywords.map((q,i)=>`<button class="yt-kw ${i===0?'active':''}" onclick="selectYtKw(this,'${q}')">${q}</button>`).join('');
+  document.getElementById('yt-result').innerHTML='<div class="yt-loading"><i class="ti ti-loader"></i> 불러오는 중...</div>';
+  const isVibe=!!d.isVibe;
+  const supportBtn=document.getElementById('tab-btn-support');
+  supportBtn.innerHTML=isVibe?'<i class="ti ti-building-bank"></i> 국가 지원':'<i class="ti ti-briefcase"></i> 채용 정보';
+  supportBtn.onclick=()=>switchDetailTab(supportBtn,'jobs');
+  document.getElementById('jobs-normal').style.display=isVibe?'none':'';
+  document.getElementById('jobs-gov').style.display=isVibe?'':'none';
+  if(!isVibe){
+    const jobQ=encodeURIComponent(d.jobKeyword);
+    document.getElementById('job-links').innerHTML=`
+      <a class="job-link-card" href="https://www.saramin.co.kr/zf_user/search?searchword=${jobQ}" target="_blank"><div class="job-site-icon saramin">사람인</div><div class="job-link-info"><h4>사람인</h4><p>${d.jobTitle} 채용 공고 보기</p></div><i class="ti ti-external-link" style="margin-left:auto;color:#888"></i></a>
+      <a class="job-link-card" href="https://www.jobkorea.co.kr/Search/?stext=${jobQ}" target="_blank"><div class="job-site-icon jobkorea">잡코리아</div><div class="job-link-info"><h4>잡코리아</h4><p>${d.jobTitle} 채용 공고 보기</p></div><i class="ti ti-external-link" style="margin-left:auto;color:#888"></i></a>
+      <a class="job-link-card" href="https://www.wanted.co.kr/search?query=${jobQ}" target="_blank"><div class="job-site-icon wanted">원티드</div><div class="job-link-info"><h4>원티드</h4><p>${d.jobTitle} 채용 공고 보기</p></div><i class="ti ti-external-link" style="margin-left:auto;color:#888"></i></a>`;
+    document.getElementById('job-keywords').innerHTML=d.jobKeywords.map(k=>`<span class="job-kw">${k}</span>`).join('');
+  } else {
+    renderGov('work24');
+    document.querySelectorAll('.gov-kw').forEach(btn=>{
+      btn.onclick=()=>{
+        document.querySelectorAll('.gov-kw').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        renderGov(btn.dataset.type);
+      };
+    });
+  }
+  document.querySelectorAll('.detail-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+  document.querySelectorAll('.detail-section').forEach((s,i)=>s.classList.toggle('active',i===0));
+  showPage('detail');
+  fetchYoutube(currentYtQuery);
+}
+
+function toggleWeek(i){const el=document.getElementById('week-'+i),ch=document.getElementById('chevron-'+i),open=el.classList.toggle('open');ch.style.transform=open?'rotate(180deg)':'';}
+function switchDetailTab(el,tab){document.querySelectorAll('.detail-tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.detail-section').forEach(s=>s.classList.remove('active'));document.getElementById('tab-'+tab).classList.add('active');if(tab==='youtube')fetchYoutube(currentYtQuery);}
+function selectYtKw(el,q){
+  document.querySelectorAll('.yt-kw').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  currentYtQuery=q;
+  if(currentCourseId)addSearch(currentCourseId);
+  fetchYoutube(q);
+}
+
+async function fetchYoutube(query){
+  const result=document.getElementById('yt-result');
+  result.innerHTML='<div class="yt-loading"><i class="ti ti-loader"></i> 영상 불러오는 중...</div>';
+  try{
+    const today=new Date().toISOString().slice(0,10);
+    const url=`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=12&relevanceLanguage=ko&order=date&key=${API_KEY}&_date=${today}`;
+    const res=await fetch(url);const data=await res.json();
+    if(data.error){result.innerHTML=`<div class="yt-error">오류: ${data.error.message}</div>`;return;}
+    if(!data.items||!data.items.length){result.innerHTML='<div class="yt-error">검색 결과가 없습니다.</div>';return;}
+    result.innerHTML='<div class="yt-grid">'+data.items.map(item=>{
+      const vid=item.id.videoId,title=item.snippet.title.replace(/</g,'&lt;'),channel=item.snippet.channelTitle.replace(/</g,'&lt;'),thumb=item.snippet.thumbnails.medium?.url||item.snippet.thumbnails.default?.url;
+      return `<a class="yt-card" href="https://www.youtube.com/watch?v=${vid}" target="_blank"><div class="yt-thumb"><img src="${thumb}" alt="${title}" loading="lazy"><div class="yt-play"><i class="ti ti-player-play"></i></div></div><div class="yt-info"><h3>${title}</h3><div class="yt-meta">${channel}</div></div></a>`;
+    }).join('')+'</div>';
+  }catch(e){result.innerHTML='<div class="yt-error">영상을 불러오지 못했습니다. API 키 또는 네트워크를 확인해 주세요.</div>';}
+}
+
+function renderGov(type){
+  const el=document.getElementById('gov-content');
+  const data={
+    work24:[
+      {badge:'blue',badgeText:'고용24',title:'국민내일배움카드',desc:'재직자·실업자·자영업자 모두 신청 가능. 최대 500만원 훈련비 지원. AI·디지털 관련 강의 수강 시 정부가 비용을 대부분 지원합니다.',info:['지원금액: 최대 500만원','대상: 만 15세 이상 누구나','신청: 고용24 홈페이지'],link:'https://www.work24.go.kr/cm/c/f/CMCFF010M0.do',linkText:'고용24에서 신청하기',linkColor:'blue'},
+      {badge:'blue',badgeText:'고용24',title:'직업훈련 포털 바이브코딩 검색',desc:'고용24에서 "AI 창업", "디지털 전환" 키워드로 검색하면 국비 지원 강의 목록을 바로 확인할 수 있습니다.',info:['검색키워드: AI창업, 디지털전환, 1인창업','훈련비: 무료~소액 자부담','지역: 온라인 강의 가능'],link:'https://www.work24.go.kr/wk/a/b/1200/retriveTrnInsttInfoList.do',linkText:'직업훈련 검색하기',linkColor:'blue'},
+    ],
+    kdigital:[
+      {badge:'green',badgeText:'K-Digital',title:'K-Digital Training',desc:'고용노동부 주관. AI·빅데이터·클라우드 등 디지털 핵심 분야 훈련 과정. 수강료 전액 무료 + 훈련장려금 지급.',info:['수강료: 전액 무료','훈련장려금: 월 최대 30만원','기간: 3~6개월'],link:'https://www.work24.go.kr/cm/c/f/CMCFF010M0.do',linkText:'K-Digital 과정 찾기',linkColor:'green'},
+      {badge:'green',badgeText:'K-Digital',title:'디지털 새싹 캠프',desc:'비전공자·경력단절자를 위한 디지털 기초 교육. SW·AI 기초부터 실습까지 무료로 제공합니다.',info:['대상: 비전공자, 경력단절자','비용: 무료','운영: 전국 교육기관'],link:'https://sesac.seoul.kr',linkText:'새싹 캠프 보기',linkColor:'green'},
+    ],
+    sbiz:[
+      {badge:'amber',badgeText:'소상공인',title:'소상공인 디지털 전환 지원',desc:'소상공인진흥공단에서 운영하는 디지털 전환 교육. 온라인 창업, SNS 마케팅, AI 활용 등을 무료로 배울 수 있습니다.',info:['대상: 예비창업자·소상공인','비용: 무료','신청: 소상공인 지식배움터'],link:'https://edu.sbiz.or.kr',linkText:'소상공인 교육 신청',linkColor:'amber'},
+      {badge:'amber',badgeText:'소상공인',title:'온라인 창업 패키지',desc:'사업 아이디어부터 온라인 스토어 개설, SNS 마케팅까지 한 번에 지원하는 패키지 교육 프로그램.',info:['지원내용: 교육 + 멘토링','기간: 2~4주','신청방법: 온라인 접수'],link:'https://www.sbiz.or.kr',linkText:'소상공인진흥공단 바로가기',linkColor:'amber'},
+    ],
+    startup:[
+      {badge:'coral',badgeText:'창업진흥원',title:'예비창업패키지',desc:'창업 아이템을 보유한 예비창업자에게 사업화 자금(최대 1억원)과 창업 교육, 멘토링을 지원합니다.',info:['지원금액: 최대 1억원','대상: 예비창업자','모집: 연 1회 (상반기)'],link:'https://www.k-startup.go.kr',linkText:'K-Startup에서 신청',linkColor:'coral'},
+      {badge:'coral',badgeText:'창업진흥원',title:'창업 교육 프로그램',desc:'K-Startup 온라인 교육관에서 창업 기초부터 마케팅, 투자유치까지 무료 온라인 강의를 제공합니다.',info:['비용: 무료','강의수: 1,000개 이상','수강: 언제 어디서나 온라인'],link:'https://www.k-startup.go.kr/web/common/eduMgmt/eduMain.do',linkText:'창업 교육 무료 수강',linkColor:'coral'},
+    ],
+  };
+  el.innerHTML=(data[type]||[]).map(d=>`
+    <div class="gov-card">
+      <span class="gov-badge ${d.badge}">${d.badgeText}</span>
+      <h3>${d.title}</h3>
+      <p>${d.desc}</p>
+      <div class="gov-info-row">${d.info.map(i=>`<span class="gov-info-item">${i}</span>`).join('')}</div>
+      <a class="gov-link ${d.linkColor}" href="${d.link}" target="_blank">${d.linkText} <i class="ti ti-external-link"></i></a>
+    </div>`).join('');
+}
+
+/* ══════════════════════════════════════
+   관리자 비밀번호 모달
+══════════════════════════════════════ */
+const ADMIN_PW='seohiit2026';
+function openAdminModal(){
+  const overlay=document.getElementById('admin-modal-overlay');
+  const input=document.getElementById('admin-pw-input');
+  const err=document.getElementById('admin-modal-error');
+  input.value='';err.style.display='none';
+  overlay.classList.add('open');
+  setTimeout(()=>input.focus(),100);
+}
+function closeAdminModal(e){
+  if(e&&e.target!==document.getElementById('admin-modal-overlay'))return;
+  document.getElementById('admin-modal-overlay').classList.remove('open');
+}
+function confirmAdmin(){
+  const input=document.getElementById('admin-pw-input');
+  const err=document.getElementById('admin-modal-error');
+  if(input.value===ADMIN_PW){
+    document.getElementById('admin-modal-overlay').classList.remove('open');
+    showPage('admin');
+  } else {
+    err.style.display='block';input.value='';input.focus();
+  }
+}
+
+/* ══════════════════════════════════════
+   GitHub API 연동
+══════════════════════════════════════ */
+function isGithubConfigured(){
+  return GH_CONFIG.owner && GH_CONFIG.repo && GH_CONFIG.token;
+}
+
+async function fetchFromGithub(){
+  if(!isGithubConfigured()) return null;
+  try{
+    const url=`https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.path}`;
+    const res=await fetch(url,{headers:{Authorization:`token ${GH_CONFIG.token}`,Accept:'application/vnd.github.v3+json'}});
+    if(!res.ok) return null;
+    const json=await res.json();
+    dataFileSha=json.sha;
+    const content=decodeURIComponent(escape(atob(json.content.replace(/\n/g,''))));
+    return JSON.parse(content);
+  }catch(e){return null;}
+}
+
+async function saveToGithub(data){
+  if(!isGithubConfigured()) return false;
+  try{
+    const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
+    const url=`https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.path}`;
+    const body={message:`관리자 업데이트: ${new Date().toLocaleString('ko-KR')}`,content};
+    if(dataFileSha) body.sha=dataFileSha;
+    const res=await fetch(url,{method:'PUT',headers:{Authorization:`token ${GH_CONFIG.token}`,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(!res.ok){const err=await res.json();console.error(err);return false;}
+    const json=await res.json();
+    dataFileSha=json.content.sha;
+    return true;
+  }catch(e){return false;}
+}
+
+/* ══════════════════════════════════════
+   관리자 데이터 로드
+══════════════════════════════════════ */
+let adminDataLoaded=false;
+
+async function loadAdminData(force=false){
+  if(adminDataLoaded&&!force) return;
+  document.getElementById('admin-courses-loading').style.display='block';
+  document.getElementById('admin-courses-table').style.display='none';
+  setSyncText('불러오는 중...','ti-loader');
+
+  let data=null;
+  if(isGithubConfigured()){
+    data=await fetchFromGithub();
+    if(data){
+      setSyncText('GitHub 연동됨','ti-cloud-check');
+      document.getElementById('github-notice').style.display='none';
+    } else {
+      setSyncText('GitHub 오류 — 로컬 데이터 사용','ti-cloud-off');
+    }
+  } else {
+    document.getElementById('github-notice').style.display='flex';
+    setSyncText('GitHub 미설정','ti-cloud-off');
+  }
+
+  if(data){
+    COURSES=data.courses||COURSES;
+    STUDENTS=data.students||STUDENTS;
+  }
+
+  adminDataLoaded=true;
+  updateAdminStats();
+  renderAdminCourses();
+  renderAdminStudents();
+  renderCourses('all');
+  renderPopular();
+  updateMainCourseCount();
+
+  document.getElementById('admin-courses-loading').style.display='none';
+  document.getElementById('admin-courses-table').style.display='block';
+}
+
+function setSyncText(text,icon){
+  document.getElementById('sync-text').textContent=text;
+  const syncInfo=document.getElementById('sync-info');
+  syncInfo.innerHTML=`<i class="ti ${icon}"></i> <span id="sync-text">${text}</span>`;
+}
+
+function updateMainCourseCount(){
+  const el=document.getElementById('main-course-count');
+  if(el) el.textContent=COURSES.length+'개';
+}
+
+/* ── 통계 계산 ── */
+function updateAdminStats(){
+  const onCourses=COURSES.filter(c=>c.status==='on').length;
+  const totalStudents=COURSES.reduce((s,c)=>s+(c.students||0),0);
+  const newStudents=STUDENTS.filter(s=>s.status==='new').length;
+  const completedStudents=STUDENTS.filter(s=>s.status==='off').length;
+  const completionRate=STUDENTS.length>0?Math.round((completedStudents/STUDENTS.length)*100):0;
+
+  document.getElementById('stat-students').textContent=totalStudents;
+  document.getElementById('stat-courses').textContent=onCourses;
+  document.getElementById('stat-new').textContent=newStudents;
+  document.getElementById('stat-completion').textContent=completionRate+'%';
+
+  // 신규 신청 알림 배너 업데이트
+  const alertBar=document.getElementById('new-enroll-alert');
+  const countEl=document.getElementById('new-enroll-count');
+  const tabBtn=document.getElementById('tab-students-btn');
+  if(newStudents>0){
+    alertBar.style.display='flex';
+    countEl.textContent=newStudents;
+    tabBtn.innerHTML=`수강생 관리 <span class="new-badge">${newStudents}</span>`;
+  } else {
+    alertBar.style.display='none';
+    tabBtn.innerHTML='수강생 관리';
+  }
+}
+
+/* 신규 신청 알림 클릭 → 수강생 관리 탭으로 이동 */
+function goToNewStudents(){
+  const tabBtn=document.getElementById('tab-students-btn');
+  adminTab(tabBtn,'admin-students');
+  // 신규 필터 적용
+  const searchInput=document.getElementById('student-search');
+  if(searchInput){searchInput.value='';renderAdminStudents();}
+  // 신규 행 강조
+  setTimeout(()=>{
+    document.querySelectorAll('#admin-students-tbody tr').forEach(tr=>{
+      const statusEl=tr.querySelector('.status.new');
+      if(statusEl){tr.style.background='#FFF8F8';}
+    });
+  },100);
+}
+
+/* ── 상태 레이블 ── */
+const STATUS_LABELS={on:'운영 중',off:'준비 중',new:'신규'};
+
+/* ── 강의 관리 테이블 렌더링 ── */
+
+function renderAdminCourses(){
+  const q=(document.getElementById('course-search')?.value||'').toLowerCase();
+  const filtered=COURSES.filter(c=>!q||c.title.toLowerCase().includes(q)||CAT_LABELS[c.cat]?.includes(q));
+  document.getElementById('course-count-label').textContent=`총 ${filtered.length}개 강의`;
+  document.getElementById('admin-courses-tbody').innerHTML=filtered.map(c=>`
+    <tr>
+      <td style="font-weight:500">${c.title}</td>
+      <td>${CAT_LABELS[c.cat]||c.cat}</td>
+      <td>${c.students||0}명</td>
+      <td>
+        <span class="status ${c.status} status-toggle" onclick="toggleCourseStatus('${c.id}')" title="클릭하여 상태 변경">
+          ${STATUS_LABELS[c.status]||c.status}
+        </span>
+      </td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="action-btn" onclick="openCourseModal('${c.id}')"><i class="ti ti-edit" style="font-size:12px"></i> 수정</button>
+        <button class="action-btn danger" onclick="deleteCourse('${c.id}')"><i class="ti ti-trash" style="font-size:12px"></i> 삭제</button>
+      </td>
+    </tr>`).join('');
+}
+
+/* ── 수강생 관리 테이블 렌더링 ── */
+const STUDENT_STATUS_LABELS={new:'신규',on:'수강 중',off:'수료'};
+
+function renderAdminStudents(){
+  const q=(document.getElementById('student-search')?.value||'').toLowerCase();
+  const filtered=STUDENTS.filter(s=>!q||s.name.toLowerCase().includes(q)||s.course.toLowerCase().includes(q));
+  document.getElementById('admin-students-tbody').innerHTML=filtered.map(s=>`
+    <tr>
+      <td style="font-weight:500">${s.name}</td>
+      <td style="color:#555;font-size:13px">${s.phone||'—'}</td>
+      <td>${s.course}</td>
+      <td>${s.date}</td>
+      <td>
+        <span class="status ${s.status} status-toggle" onclick="toggleStudentStatus('${s.id}')" title="클릭하여 상태 변경">
+          ${STUDENT_STATUS_LABELS[s.status]||s.status}
+        </span>
+      </td>
+      <td style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="action-btn" onclick="openStudentModal('${s.id}')"><i class="ti ti-edit" style="font-size:12px"></i> 수정</button>
+        <button class="action-btn danger" onclick="deleteStudent('${s.id}')"><i class="ti ti-trash" style="font-size:12px"></i> 삭제</button>
+      </td>
+    </tr>`).join('');
+}
+
+/* ── 관리자 탭 ── */
+function adminTab(el,id){
+  document.querySelectorAll('#page-admin .tab-bar .tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  ['admin-courses','admin-students','admin-settings'].forEach(tid=>{
+    const el=document.getElementById(tid);
+    if(el) el.style.display=tid===id?'':'none';
+  });
+}
+
+/* ══════════════════════════════════════
+   강의 CRUD
+══════════════════════════════════════ */
+function openCourseModal(id=null){
+  const modal=document.getElementById('course-modal-overlay');
+  const titleEl=document.getElementById('course-modal-title');
+  document.getElementById('course-edit-id').value=id||'';
+
+  if(id){
+    const c=COURSES.find(x=>x.id===id);
+    if(!c)return;
+    titleEl.innerHTML='<i class="ti ti-edit" style="color:#185FA5"></i> 강의 수정';
+    document.getElementById('cf-title').value=c.title;
+    document.getElementById('cf-desc').value=c.desc;
+    document.getElementById('cf-cat').value=c.cat;
+    document.getElementById('cf-level').value=c.level;
+    document.getElementById('cf-icon').value=c.icon;
+    document.getElementById('cf-iconClass').value=c.iconClass;
+    document.getElementById('cf-status').value=c.status;
+    document.getElementById('cf-students').value=c.students||0;
+  } else {
+    titleEl.innerHTML='<i class="ti ti-book" style="color:#185FA5"></i> 강의 추가';
+    document.getElementById('cf-title').value='';
+    document.getElementById('cf-desc').value='';
+    document.getElementById('cf-cat').value='web';
+    document.getElementById('cf-level').value='beginner';
+    document.getElementById('cf-icon').value='ti-code';
+    document.getElementById('cf-iconClass').value='web';
+    document.getElementById('cf-status').value='off';
+    document.getElementById('cf-students').value='0';
+  }
+  modal.classList.add('open');
+}
+
+function closeCourseModal(e){
+  if(e&&e.target!==document.getElementById('course-modal-overlay'))return;
+  document.getElementById('course-modal-overlay').classList.remove('open');
+}
+
+async function saveCourse(){
+  const title=document.getElementById('cf-title').value.trim();
+  const desc=document.getElementById('cf-desc').value.trim();
+  if(!title||!desc){showToast('강의명과 설명을 입력해 주세요.','error');return;}
+
+  const editId=document.getElementById('course-edit-id').value;
+  const levelMap={beginner:'입문',inter:'중급',adv:'고급',middle:'왕초보',special:'고교생',teacher:'강사입문'};
+  const courseData={
+    id: editId || 'course_'+Date.now(),
+    cat: document.getElementById('cf-cat').value,
+    icon: document.getElementById('cf-icon').value||'ti-code',
+    iconClass: document.getElementById('cf-iconClass').value,
+    title,desc,
+    level: document.getElementById('cf-level').value,
+    levelText: levelMap[document.getElementById('cf-level').value]||'입문',
+    status: document.getElementById('cf-status').value,
+    students: parseInt(document.getElementById('cf-students').value)||0
+  };
+
+  if(editId){
+    const idx=COURSES.findIndex(c=>c.id===editId);
+    if(idx>-1) COURSES[idx]=courseData;
+  } else {
+    COURSES.push(courseData);
+  }
+
+  document.getElementById('course-modal-overlay').classList.remove('open');
+  await persistData();
+  renderAdminCourses();
+  renderCourseTabs();
+  renderEnrollDropdown();
+  renderCourses('all');
+  renderPopular();
+  updateAdminStats();
+  updateMainCourseCount();
+  showToast(editId?'강의가 수정되었습니다.':'강의가 추가되었습니다.','success');
+}
+
+async function deleteCourse(id){
+  if(!confirm('이 강의를 삭제하시겠습니까?'))return;
+  COURSES=COURSES.filter(c=>c.id!==id);
+  await persistData();
+  renderAdminCourses();
+  renderCourseTabs();
+  renderEnrollDropdown();
+  renderCourses('all');
+  renderPopular();
+  updateAdminStats();
+  updateMainCourseCount();
+  showToast('강의가 삭제되었습니다.','success');
+}
+
+async function toggleCourseStatus(id){
+  const c=COURSES.find(x=>x.id===id);
+  if(!c)return;
+  const cycle={on:'off',off:'new',new:'on'};
+  c.status=cycle[c.status]||'off';
+  await persistData();
+  renderAdminCourses();
+  updateAdminStats();
+  showToast(`상태가 "${STATUS_LABELS[c.status]}"으로 변경되었습니다.`,'success');
+}
+
+/* ══════════════════════════════════════
+   수강생 CRUD
+══════════════════════════════════════ */
+function openStudentModal(id=null){
+  const modal=document.getElementById('student-modal-overlay');
+  const titleEl=document.getElementById('student-modal-title');
+  document.getElementById('student-edit-id').value=id||'';
+
+  // 강의 목록 채우기
+  const courseSelect=document.getElementById('sf-course');
+  courseSelect.innerHTML=COURSES.map(c=>`<option value="${c.id}">${c.title}</option>`).join('');
+
+  if(id){
+    const s=STUDENTS.find(x=>x.id===id);
+    if(!s)return;
+    titleEl.innerHTML='<i class="ti ti-user-edit" style="color:#185FA5"></i> 수강생 수정';
+    document.getElementById('sf-name').value=s.name;
+    courseSelect.value=s.courseId||'';
+    document.getElementById('sf-date').value=s.date.replace(/\./g,'-');
+    document.getElementById('sf-status').value=s.status;
+  } else {
+    titleEl.innerHTML='<i class="ti ti-user-plus" style="color:#185FA5"></i> 수강생 추가';
+    document.getElementById('sf-name').value='';
+    document.getElementById('sf-date').value=new Date().toISOString().slice(0,10);
+    document.getElementById('sf-status').value='new';
+  }
+  modal.classList.add('open');
+}
+
+function closeStudentModal(e){
+  if(e&&e.target!==document.getElementById('student-modal-overlay'))return;
+  document.getElementById('student-modal-overlay').classList.remove('open');
+}
+
+async function saveStudent(){
+  const name=document.getElementById('sf-name').value.trim();
+  const courseId=document.getElementById('sf-course').value;
+  const dateRaw=document.getElementById('sf-date').value;
+  if(!name||!courseId||!dateRaw){showToast('모든 필드를 입력해 주세요.','error');return;}
+
+  const course=COURSES.find(c=>c.id===courseId);
+  const date=dateRaw.replace(/-/g,'.');
+  const editId=document.getElementById('student-edit-id').value;
+
+  const studentData={
+    id: editId||'s_'+Date.now(),
+    name,
+    course: course?course.title:courseId,
+    courseId,
+    date,
+    status: document.getElementById('sf-status').value
+  };
+
+  if(editId){
+    const idx=STUDENTS.findIndex(s=>s.id===editId);
+    if(idx>-1) STUDENTS[idx]=studentData;
+  } else {
+    STUDENTS.push(studentData);
+  }
+
+  document.getElementById('student-modal-overlay').classList.remove('open');
+  await persistData();
+  renderAdminStudents();
+  updateAdminStats();
+  showToast(editId?'수강생 정보가 수정되었습니다.':'수강생이 추가되었습니다.','success');
+}
+
+async function deleteStudent(id){
+  if(!confirm('이 수강생을 삭제하시겠습니까?'))return;
+  STUDENTS=STUDENTS.filter(s=>s.id!==id);
+  await persistData();
+  renderAdminStudents();
+  updateAdminStats();
+  showToast('수강생이 삭제되었습니다.','success');
+}
+
+async function toggleStudentStatus(id){
+  const s=STUDENTS.find(x=>x.id===id);
+  if(!s)return;
+  const cycle={new:'on',on:'off',off:'new'};
+  s.status=cycle[s.status]||'new';
+  await persistData();
+  renderAdminStudents();
+  updateAdminStats();
+  showToast(`상태가 "${STUDENT_STATUS_LABELS[s.status]}"으로 변경되었습니다.`,'success');
+}
+
+/* ══════════════════════════════════════
+   데이터 저장 (GitHub or 메모리)
+══════════════════════════════════════ */
+async function persistData(){
+  const data={courses:COURSES,students:STUDENTS};
+  if(isGithubConfigured()){
+    setSyncText('저장 중...','ti-loader');
+    const ok=await saveToGithub(data);
+    if(ok){
+      setSyncText('GitHub에 저장됨 ✓','ti-cloud-check');
+      showToast('GitHub에 저장되었습니다.','success');
+    } else {
+      setSyncText('저장 실패 — 메모리에만 저장됨','ti-cloud-off');
+      showToast('GitHub 저장 실패. 설정을 확인해 주세요.','error');
+    }
+  }
+}
+
+/* ══════════════════════════════════════
+   GitHub 설정
+══════════════════════════════════════ */
+function openGithubConfig(){
+  adminTab(document.getElementById('tab-settings-btn'),'admin-settings');
+}
+
+async function saveGithubConfig(){
+  const owner=document.getElementById('cfg-owner').value.trim();
+  const repo=document.getElementById('cfg-repo').value.trim();
+  const path=document.getElementById('cfg-path').value.trim()||'data.json';
+  const token=document.getElementById('cfg-token').value.trim();
+  if(!owner||!repo||!token){showToast('모든 필드를 입력해 주세요.','error');return;}
+  GH_CONFIG={owner,repo,path,token};
+  try{localStorage.setItem(GH_STORAGE_KEY,JSON.stringify(GH_CONFIG));}catch(e){}
+  document.getElementById('github-notice').style.display='none';
+  showToast('설정이 저장되었습니다. 연결을 테스트해 보세요.','success');
+}
+
+async function testGithubConnection(){
+  const result=document.getElementById('cfg-result');
+  result.style.display='block';
+  result.style.color='#888';
+  result.textContent='연결 테스트 중...';
+
+  const owner=document.getElementById('cfg-owner').value.trim();
+  const repo=document.getElementById('cfg-repo').value.trim();
+  const path=document.getElementById('cfg-path').value.trim()||'data.json';
+  const token=document.getElementById('cfg-token').value.trim();
+  if(!owner||!repo||!token){result.style.color='#c0392b';result.textContent='모든 필드를 입력해 주세요.';return;}
+
+  try{
+    const url=`https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const res=await fetch(url,{headers:{Authorization:`token ${token}`,Accept:'application/vnd.github.v3+json'}});
+    if(res.ok){
+      result.style.color='#3B6D11';
+      result.textContent='✓ 연결 성공! 파일을 찾았습니다. 저장 버튼을 눌러 설정을 적용하세요.';
+    } else if(res.status===404){
+      result.style.color='#854F0B';
+      result.textContent='⚠ 저장소 또는 파일을 찾을 수 없습니다. 저장소에 data.json 파일을 먼저 push해 주세요.';
+    } else if(res.status===401){
+      result.style.color='#c0392b';
+      result.textContent='✗ 인증 실패. Token을 확인해 주세요.';
+    } else {
+      result.style.color='#c0392b';
+      result.textContent=`✗ 오류 (${res.status})`;
+    }
+  }catch(e){
+    result.style.color='#c0392b';
+    result.textContent='✗ 네트워크 오류. 인터넷 연결을 확인해 주세요.';
+  }
+}
+
+function exportData(){
+  const data={courses:COURSES,students:STUDENTS};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='data.json';a.click();
+  URL.revokeObjectURL(url);
+  showToast('data.json이 다운로드되었습니다.','success');
+}
+
+/* ══════════════════════════════════════
+   Toast 알림
+══════════════════════════════════════ */
+let toastTimer=null;
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast'+(type?' '+type:'');
+  t.classList.add('show');
+  if(toastTimer)clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+/* ══════════════════════════════════════
+   수강 신청 드롭다운
+══════════════════════════════════════ */
+// 카테고리별 아이콘 색상 매핑
+const CAT_ICON_CLASS={web:'web',be:'be',data:'data',ai:'ai',startup:'coral',middle:'pink',special:'teal',teacher:'purple',cpp:'be'};
+// 카테고리별 대표 아이콘
+const CAT_ICON={web:'ti-brand-html5',be:'ti-server',data:'ti-chart-bar',ai:'ti-robot',startup:'ti-rocket',middle:'ti-device-desktop',special:'ti-school',teacher:'ti-chalkboard',cpp:'ti-code'};
+
+function renderEnrollDropdown(){
+  const dd=document.getElementById('enroll-dropdown');
+  if(!dd) return;
+
+  // COURSES에서 실제 존재하는 카테고리만 추출 (순서 유지)
+  const seen=new Set();
+  const cats=[];
+  COURSES.forEach(c=>{
+    if(!seen.has(c.cat)){seen.add(c.cat);cats.push(c.cat);}
+  });
+
+  const items=cats.map(cat=>{
+    const count=COURSES.filter(c=>c.cat===cat).length;
+    const label=CAT_LABELS[cat]||cat;
+    const iconClass=CAT_ICON_CLASS[cat]||'web';
+    const icon=CAT_ICON[cat]||'ti-book';
+    return `<div class="enroll-dropdown-item" onclick="goToEnroll('${cat}')">
+      <div class="ed-icon card-icon ${iconClass}" style="width:28px;height:28px;border-radius:7px;font-size:14px;margin-bottom:0">
+        <i class="ti ${icon}"></i>
+      </div>
+      <span>${label}</span>
+      <span class="ed-count">${count}</span>
+    </div>`;
+  }).join('');
+
+  dd.innerHTML=`
+    ${items}
+    <div class="enroll-dropdown-divider"></div>
+    <div class="enroll-dropdown-all" onclick="goToEnroll('all')">
+      <i class="ti ti-send"></i> 수강 신청 페이지로
+    </div>`;
+
+  // 수강신청 페이지 강의 선택 드롭다운도 업데이트
+  renderEnrollCourseSelect();
+}
+
+function goToEnroll(cat){
+  closeEnrollDropdown();
+  // 수강신청 페이지의 강의 선택 드롭다운 업데이트
+  renderEnrollCourseSelect(cat);
+  showPage('enroll');
+  // 신청 폼 초기화 (성공 화면이 보이고 있으면 폼으로 되돌림)
+  document.getElementById('enroll-form-wrap').style.display='';
+  document.getElementById('enroll-success-wrap').style.display='none';
+}
+
+function renderEnrollCourseSelect(preselectedCat){
+  const sel=document.getElementById('enroll-course');
+  if(!sel) return;
+  sel.innerHTML='<option value="">강의를 선택해 주세요</option>';
+  COURSES.forEach(c=>{
+    const opt=document.createElement('option');
+    opt.value=c.id;
+    opt.textContent=c.title+(c.status==='off'?' (준비 중)':'');
+    if(preselectedCat && preselectedCat!=='all' && c.cat===preselectedCat){
+      // 해당 카테고리 첫 번째 강의 자동 선택
+    }
+    sel.appendChild(opt);
+  });
+  // 카테고리가 지정된 경우 해당 카테고리 첫 강의 선택
+  if(preselectedCat && preselectedCat!=='all'){
+    const first=COURSES.find(c=>c.cat===preselectedCat);
+    if(first) sel.value=first.id;
+  }
+}
+
+/* ══════════════════════════════════════
+   수강 신청 폼 제출
+══════════════════════════════════════ */
+async function submitEnroll(){
+  const name=document.getElementById('enroll-name').value.trim();
+  const phone=document.getElementById('enroll-phone').value.trim();
+  const courseId=document.getElementById('enroll-course').value;
+
+  if(!name){showToast('이름을 입력해 주세요.','error');document.getElementById('enroll-name').focus();return;}
+  if(!phone){showToast('연락처를 입력해 주세요.','error');document.getElementById('enroll-phone').value='';document.getElementById('enroll-phone').focus();return;}
+  if(!courseId){showToast('수강 희망 강의를 선택해 주세요.','error');return;}
+
+  // 버튼 비활성화 (중복 제출 방지)
+  const submitBtn=document.querySelector('.enroll-submit');
+  if(submitBtn){submitBtn.disabled=true;submitBtn.innerHTML='<i class="ti ti-loader"></i> 저장 중...';}
+
+  // STUDENTS 배열에 신청 데이터 추가
+  const course=COURSES.find(c=>c.id===courseId);
+  const today=new Date().toLocaleDateString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\. /g,'.').replace(/\.$/,'');
+  const newStudent={
+    id: 'enroll_'+Date.now(),
+    name,
+    phone,
+    course: course?course.title:courseId,
+    courseId,
+    date: today,
+    status: 'new'
+  };
+  STUDENTS.push(newStudent);
+
+  // GitHub 저장
+  let saveOk=true;
+  if(isGithubConfigured()){
+    const data={courses:COURSES,students:STUDENTS};
+    setSyncText('저장 중...','ti-loader');
+    const ok=await saveToGithub(data);
+    if(ok){
+      setSyncText('GitHub에 저장됨 ✓','ti-cloud-check');
+    } else {
+      setSyncText('저장 실패','ti-cloud-off');
+      saveOk=false;
+    }
+  }
+
+  // 버튼 복구
+  if(submitBtn){submitBtn.disabled=false;submitBtn.innerHTML='<i class="ti ti-send"></i> 수강 신청하기';}
+
+  if(!saveOk){
+    // 저장 실패 시 배열에서 제거하고 에러 표시
+    STUDENTS.pop();
+    showToast('저장에 실패했습니다. 잠시 후 다시 시도해 주세요.','error');
+    return;
+  }
+
+  // 관리자 통계 업데이트
+  adminDataLoaded=false;
+  updateAdminStats();
+
+  // 신청 완료 처리 (UI 전환)
+  document.getElementById('enroll-form-wrap').style.display='none';
+  document.getElementById('enroll-success-wrap').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function resetEnrollForm(){
+  document.getElementById('enroll-name').value='';
+  document.getElementById('enroll-phone').value='';
+  document.getElementById('enroll-course').value='';
+  document.getElementById('enroll-form-wrap').style.display='';
+  document.getElementById('enroll-success-wrap').style.display='none';
+}
+
+function toggleEnrollDropdown(e){
+  e.stopPropagation();
+  const wrap=document.getElementById('enroll-wrap');
+  wrap.classList.toggle('open');
+}
+
+function closeEnrollDropdown(){
+  document.getElementById('enroll-wrap')?.classList.remove('open');
+}
+
+// 외부 클릭 시 드롭다운 닫기
+document.addEventListener('click',e=>{
+  if(!document.getElementById('enroll-wrap')?.contains(e.target)){
+    closeEnrollDropdown();
+  }
+});
+
+/* ══════════════════════════════════════
+   강의 탭 동적 생성
+══════════════════════════════════════ */
+function renderCourseTabs(){
+  const tabBar=document.getElementById('course-tabs');
+  if(!tabBar) return;
+
+  // 현재 활성 탭 기억
+  const activeCat=tabBar.querySelector('.tab.active')?.dataset.cat||'all';
+
+  // COURSES에서 실제 존재하는 카테고리 추출
+  const seen=new Set();
+  const cats=[];
+  COURSES.forEach(c=>{if(!seen.has(c.cat)){seen.add(c.cat);cats.push(c.cat);}});
+
+  const allBtn=`<button class="tab${activeCat==='all'?' active':''}" data-cat="all">전체</button>`;
+  const catBtns=cats.map(cat=>`<button class="tab${activeCat===cat?' active':''}" data-cat="${cat}">${CAT_LABELS[cat]||cat}</button>`).join('');
+  tabBar.innerHTML=allBtn+catBtns;
+}
+
+/* ══════════════════════════════════════
+   초기화
+══════════════════════════════════════ */
+// 기본 데이터 로드 (data.json에서 fetch 시도 — file:// 프로토콜에서는 건너뜀)
+(async function init(){
+  if(location.protocol !== 'file:'){
+    try{
+      const res=await fetch('data.json?_='+Date.now());
+      if(res.ok){
+        const data=await res.json();
+        COURSES=data.courses||COURSES;
+        STUDENTS=data.students||STUDENTS;
+      }
+    }catch(e){}
+  }
+  renderCourseTabs();
+  renderEnrollDropdown();
+  renderCourses('all');
+  renderPopular();
+  updateMainCourseCount();
+})();
+</script>
 </body>
 </html>
