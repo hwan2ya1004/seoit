@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "middle2",
-      "cat": "middle",
-      "icon": "ti-brand-office",
-      "iconClass": "pink",
-      "title": "스마트폰 & 엑셀 활용",
-      "desc": "일상과 업무에 바로 쓰는 스마트폰·문서 작성 스킬",
-      "level": "middle",
-      "levelText": "왕초보",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "middle3",
       "cat": "middle",
       "icon": "ti-sparkles",
