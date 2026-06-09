@@ -1059,11 +1059,20 @@ async function fetchFromGithub(){
   }catch(e){return null;}
 }
 
+let _ghSaving=false;
 async function saveToGithub(data){
   if(!isGithubConfigured()) return false;
+  // 동시 저장 방지: 이전 저장이 끝날 때까지 대기
+  while(_ghSaving){ await new Promise(r=>setTimeout(r,300)); }
+  _ghSaving=true;
   try{
-    const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
     const url=`https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.path}`;
+    // 저장 직전 최신 SHA를 항상 다시 가져와서 422(stale sha) 오류 방지
+    try{
+      const chk=await fetch(url,{headers:{Authorization:`token ${GH_CONFIG.token}`,Accept:'application/vnd.github.v3+json'}});
+      if(chk.ok){const j=await chk.json();dataFileSha=j.sha;}
+    }catch(_){}
+    const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
     const body={message:`관리자 업데이트: ${new Date().toLocaleString('ko-KR')}`,content};
     if(dataFileSha) body.sha=dataFileSha;
     const res=await fetch(url,{method:'PUT',headers:{Authorization:`token ${GH_CONFIG.token}`,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
@@ -1072,6 +1081,7 @@ async function saveToGithub(data){
     dataFileSha=json.content.sha;
     return true;
   }catch(e){return false;}
+  finally{_ghSaving=false;}
 }
 
 /* ══════════════════════════════════════
