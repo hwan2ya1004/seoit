@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "middle1",
-      "cat": "middle",
-      "icon": "ti-device-desktop",
-      "iconClass": "pink",
-      "title": "중년을 위한 컴퓨터 기초",
-      "desc": "마우스부터 인터넷까지 — 처음 시작하는 디지털 생활",
-      "level": "middle",
-      "levelText": "왕초보",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "middle2",
       "cat": "middle",
       "icon": "ti-brand-office",
