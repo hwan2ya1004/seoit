@@ -695,12 +695,19 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
 const API_KEY = 'AIzaSyBzopL7NsK9kbneuYAQ0KLZTkAYfPQrxDI';
 
 /* ── GitHub 설정 ── */
-let GH_CONFIG = {
-  owner: 'hwan2ya1004',
-  repo: 'seoit',
-  path: 'data.json',
-  token: ''
-};
+const GH_STORAGE_KEY = 'seohiit_gh_config';
+let GH_CONFIG = (function(){
+  try {
+    const saved = localStorage.getItem(GH_STORAGE_KEY);
+    if(saved) return JSON.parse(saved);
+  } catch(e){}
+  return {
+    owner: 'hwan2ya1004',
+    repo: 'seoit',
+    path: 'data.json',
+    token: ''
+  };
+})();
 
 /* ── 앱 데이터 ── */
 let COURSES = [
@@ -1360,6 +1367,7 @@ async function saveGithubConfig(){
   const token=document.getElementById('cfg-token').value.trim();
   if(!owner||!repo||!token){showToast('모든 필드를 입력해 주세요.','error');return;}
   GH_CONFIG={owner,repo,path,token};
+  try{localStorage.setItem(GH_STORAGE_KEY,JSON.stringify(GH_CONFIG));}catch(e){}
   document.getElementById('github-notice').style.display='none';
   showToast('설정이 저장되었습니다. 연결을 테스트해 보세요.','success');
 }
