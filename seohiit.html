@@ -547,28 +547,25 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
     <!-- GitHub 설정 -->
     <div id="admin-settings" style="display:none">
       <div style="max-width:520px">
-        <div class="section-title" style="font-size:16px;margin-bottom:0.4rem">GitHub 저장소 설정</div>
-        <div class="section-sub" style="margin-bottom:1.5rem">데이터를 GitHub에 저장하면 Vercel 배포 후에도 데이터가 유지됩니다.</div>
-        <div class="form-group">
-          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">GitHub 사용자명 (owner) *</label>
-          <input type="text" id="cfg-owner" placeholder="예: hwan2ya1004" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
+        <div class="section-title" style="font-size:16px;margin-bottom:0.4rem">GitHub 연동 설정</div>
+        <div class="section-sub" style="margin-bottom:1.5rem">저장소 정보는 코드에 고정되어 있습니다. Vercel 환경변수에 토큰이 설정된 경우 자동으로 연동됩니다.</div>
+
+        <!-- 고정 저장소 정보 표시 -->
+        <div style="background:#f5f5f3;border:0.5px solid rgba(0,0,0,0.1);border-radius:10px;padding:12px 16px;margin-bottom:1.25rem;font-size:13px;color:#555;line-height:2">
+          <div><i class="ti ti-brand-github" style="margin-right:6px;color:#185FA5"></i><strong>저장소:</strong> hwan2ya1004 / seoit</div>
+          <div><i class="ti ti-file" style="margin-right:6px;color:#185FA5"></i><strong>파일:</strong> data.json</div>
+          <div id="token-status-row"><i class="ti ti-key" style="margin-right:6px;color:#185FA5"></i><strong>토큰:</strong> <span id="token-status-text">확인 중...</span></div>
         </div>
+
         <div class="form-group">
-          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">저장소 이름 (repo) *</label>
-          <input type="text" id="cfg-repo" placeholder="예: seoit" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
-        </div>
-        <div class="form-group">
-          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">파일 경로 (path)</label>
-          <input type="text" id="cfg-path" placeholder="data.json" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="data.json">
-        </div>
-        <div class="form-group">
-          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">Personal Access Token *</label>
-          <input type="password" id="cfg-token" placeholder="ghp_..." style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
+          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">Personal Access Token (수동 입력 — 선택사항)</label>
+          <input type="password" id="cfg-token" placeholder="Vercel 환경변수에 설정된 경우 비워두세요" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
+          <div style="font-size:11px;color:#aaa;margin-top:5px"><i class="ti ti-info-circle"></i> Vercel에 GITHUB_TOKEN 환경변수가 설정된 경우 토큰을 입력하지 않아도 됩니다.</div>
         </div>
         <div id="cfg-result" style="display:none;font-size:13px;padding:10px 14px;background:#f5f5f3;border-radius:8px;margin-bottom:1rem"></div>
         <div style="display:flex;gap:8px">
           <button class="action-btn" onclick="testGithubConnection()" style="flex:1;padding:10px;font-size:14px"><i class="ti ti-plug"></i> 연결 테스트</button>
-          <button class="btn-primary" onclick="saveGithubConfig()" style="flex:1;padding:10px;font-size:14px"><i class="ti ti-device-floppy"></i> 설정 저장</button>
+          <button class="btn-primary" onclick="saveGithubConfig()" style="flex:1;padding:10px;font-size:14px"><i class="ti ti-device-floppy"></i> 토큰 저장</button>
         </div>
       </div>
     </div>
@@ -722,20 +719,38 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
 <div class="toast" id="toast"></div>
 
 <script>
-/* ── GitHub 설정 ── */
-const GH_STORAGE_KEY = 'seohiit_gh_config';
-let GH_CONFIG = (function(){
-  try {
-    const saved = localStorage.getItem(GH_STORAGE_KEY);
-    if(saved) return JSON.parse(saved);
-  } catch(e){}
-  return {
-    owner: 'hwan2ya1004',
-    repo: 'seoit',
-    path: 'data.json',
-    token: ''
-  };
+/* ── GitHub 설정 (고정값 — Vercel 환경변수에서 토큰 자동 로드) ── */
+const GH_OWNER = 'hwan2ya1004';
+const GH_REPO  = 'seoit';
+const GH_PATH  = 'data.json';
+const GH_TOKEN_KEY = 'seohiit_gh_token';
+
+let GH_TOKEN = (function(){
+  try { return localStorage.getItem(GH_TOKEN_KEY) || ''; } catch(e){ return ''; }
 })();
+
+async function loadTokenFromVercel(){
+  try{
+    const res = await fetch('/api/github-token');
+    if(res.ok){
+      const data = await res.json();
+      if(data.token){
+        GH_TOKEN = data.token;
+        try{ localStorage.setItem(GH_TOKEN_KEY, data.token); }catch(e){}
+        return true;
+      }
+    }
+  }catch(e){}
+  return false;
+}
+
+// 하위 호환용 래퍼
+const GH_CONFIG = {
+  get owner(){ return GH_OWNER; },
+  get repo(){  return GH_REPO;  },
+  get path(){  return GH_PATH;  },
+  get token(){ return GH_TOKEN; }
+};
 
 /* ── 앱 데이터 ── */
 let COURSES = [
@@ -914,8 +929,7 @@ async function fetchYoutube(query){
   const result=document.getElementById('yt-result');
   result.innerHTML='<div class="yt-loading"><i class="ti ti-loader"></i> 영상 불러오는 중...</div>';
   try{
-    const today=new Date().toISOString().slice(0,10);
-    const url=`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=12&relevanceLanguage=ko&order=date&key=${API_KEY}&_date=${today}`;
+    const url=`/api/youtube?q=${encodeURIComponent(query)}`;
     const res=await fetch(url);const data=await res.json();
     if(data.error){result.innerHTML=`<div class="yt-error">오류: ${data.error.message}</div>`;return;}
     if(!data.items||!data.items.length){result.innerHTML='<div class="yt-error">검색 결과가 없습니다.</div>';return;}
@@ -923,7 +937,7 @@ async function fetchYoutube(query){
       const vid=item.id.videoId,title=item.snippet.title.replace(/</g,'&lt;'),channel=item.snippet.channelTitle.replace(/</g,'&lt;'),thumb=item.snippet.thumbnails.medium?.url||item.snippet.thumbnails.default?.url;
       return `<a class="yt-card" href="https://www.youtube.com/watch?v=${vid}" target="_blank"><div class="yt-thumb"><img src="${thumb}" alt="${title}" loading="lazy"><div class="yt-play"><i class="ti ti-player-play"></i></div></div><div class="yt-info"><h3>${title}</h3><div class="yt-meta">${channel}</div></div></a>`;
     }).join('')+'</div>';
-  }catch(e){result.innerHTML='<div class="yt-error">영상을 불러오지 못했습니다. API 키 또는 네트워크를 확인해 주세요.</div>';}
+  }catch(e){result.innerHTML='<div class="yt-error">영상을 불러오지 못했습니다. 네트워크를 확인해 주세요.</div>';}
 }
 
 function renderGov(type){
@@ -1389,15 +1403,13 @@ function openGithubConfig(){
 }
 
 async function saveGithubConfig(){
-  const owner=document.getElementById('cfg-owner').value.trim();
-  const repo=document.getElementById('cfg-repo').value.trim();
-  const path=document.getElementById('cfg-path').value.trim()||'data.json';
+  // GH_OWNER, GH_REPO, GH_PATH는 고정값 — 토큰만 저장
   const token=document.getElementById('cfg-token').value.trim();
-  if(!owner||!repo||!token){showToast('모든 필드를 입력해 주세요.','error');return;}
-  GH_CONFIG={owner,repo,path,token};
-  try{localStorage.setItem(GH_STORAGE_KEY,JSON.stringify(GH_CONFIG));}catch(e){}
+  if(!token){showToast('Token을 입력해 주세요.','error');return;}
+  GH_TOKEN = token;
+  try{localStorage.setItem(GH_TOKEN_KEY, token);}catch(e){}
   document.getElementById('github-notice').style.display='none';
-  showToast('설정이 저장되었습니다. 연결을 테스트해 보세요.','success');
+  showToast('Token이 저장되었습니다. 연결을 테스트해 보세요.','success');
 }
 
 async function testGithubConnection(){
@@ -1406,21 +1418,18 @@ async function testGithubConnection(){
   result.style.color='#888';
   result.textContent='연결 테스트 중...';
 
-  const owner=document.getElementById('cfg-owner').value.trim();
-  const repo=document.getElementById('cfg-repo').value.trim();
-  const path=document.getElementById('cfg-path').value.trim()||'data.json';
-  const token=document.getElementById('cfg-token').value.trim();
-  if(!owner||!repo||!token){result.style.color='#c0392b';result.textContent='모든 필드를 입력해 주세요.';return;}
+  const token=document.getElementById('cfg-token').value.trim()||GH_TOKEN;
+  if(!token){result.style.color='#c0392b';result.textContent='Token을 입력해 주세요.';return;}
 
   try{
-    const url=`https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const url=`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}`;
     const res=await fetch(url,{headers:{Authorization:`token ${token}`,Accept:'application/vnd.github.v3+json'}});
     if(res.ok){
       result.style.color='#3B6D11';
-      result.textContent='✓ 연결 성공! 파일을 찾았습니다. 저장 버튼을 눌러 설정을 적용하세요.';
+      result.textContent='✓ 연결 성공! GitHub 저장소와 정상 연결되었습니다.';
     } else if(res.status===404){
       result.style.color='#854F0B';
-      result.textContent='⚠ 저장소 또는 파일을 찾을 수 없습니다. 저장소에 data.json 파일을 먼저 push해 주세요.';
+      result.textContent='⚠ 파일을 찾을 수 없습니다. 저장소에 data.json 파일을 먼저 push해 주세요.';
     } else if(res.status===401){
       result.style.color='#c0392b';
       result.textContent='✗ 인증 실패. Token을 확인해 주세요.';
@@ -1643,8 +1652,11 @@ function renderCourseTabs(){
 /* ══════════════════════════════════════
    초기화
 ══════════════════════════════════════ */
-// 기본 데이터 로드: GitHub API → data.json 순으로 시도
+// 기본 데이터 로드: Vercel 토큰 로드 → GitHub API → data.json 순으로 시도
 (async function init(){
+  // 0) Vercel 환경변수에서 토큰 자동 로드
+  await loadTokenFromVercel();
+
   let loaded = false;
 
   // 1) GitHub API에서 최신 데이터 가져오기 (항상 최신 반영)
