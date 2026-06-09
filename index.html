@@ -377,11 +377,18 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
   </div>
   <div class="detail-tabs">
     <button class="detail-tab active" onclick="switchDetailTab(this,'curriculum')"><i class="ti ti-list-check"></i> 커리큘럼</button>
+    <button class="detail-tab" id="tab-btn-schools" onclick="switchDetailTab(this,'schools')" style="display:none"><i class="ti ti-school"></i> 우리나라 특성화고</button>
     <button class="detail-tab" onclick="switchDetailTab(this,'youtube')"><i class="ti ti-brand-youtube"></i> 유튜브 강의</button>
     <button class="detail-tab" id="tab-btn-support" onclick="switchDetailTab(this,'jobs')"><i class="ti ti-briefcase"></i> 채용 정보</button>
   </div>
   <section>
     <div id="tab-curriculum" class="detail-section active"><div id="curriculum-content"></div></div>
+    <div id="tab-schools" class="detail-section">
+      <div class="section-title" style="margin-bottom:0.4rem">우리나라 특성화 고등학교</div>
+      <div class="section-sub">IT·소프트웨어·웹개발 관련 학과를 운영하는 전국 특성화 고등학교 목록입니다</div>
+      <div class="yt-keyword-tabs" id="school-region-tabs"></div>
+      <div id="school-list"></div>
+    </div>
     <div id="tab-youtube" class="detail-section">
       <div class="yt-keyword-tabs" id="yt-kw-tabs"></div>
       <div id="yt-result"></div>
@@ -821,6 +828,91 @@ const COURSE_DETAIL = {
 
 let currentCourseId=null, currentYtQuery='';
 
+/* ── 전국 특성화고 데이터 ── */
+const SPECIAL_SCHOOLS = [
+  // 서울
+  {name:'미림마이스터고등학교',region:'서울',dept:'뉴미디어소프트웨어과·뉴미디어디자인과',url:'https://www.mirim.hs.kr'},
+  {name:'서울디지텍고등학교',region:'서울',dept:'소프트웨어개발과·정보통신과·인터넷보안과',url:'https://www.digitec.hs.kr'},
+  {name:'한국IT고등학교',region:'서울',dept:'소프트웨어개발과·정보보안과',url:'https://www.koreaithigh.hs.kr'},
+  {name:'서울로봇고등학교',region:'서울',dept:'로봇소프트웨어과·스마트전자과',url:'https://www.seoulrobot.hs.kr'},
+  {name:'서울컴퓨터과학고등학교',region:'서울',dept:'컴퓨터소프트웨어과·인공지능과',url:'https://www.scshs.hs.kr'},
+  // 경기
+  {name:'경기게임마이스터고등학교',region:'경기',dept:'게임소프트웨어과·게임그래픽과',url:'https://www.ggmhs.hs.kr'},
+  {name:'수원정보과학고등학교',region:'경기',dept:'소프트웨어개발과·정보통신과',url:'https://www.suwonit.hs.kr'},
+  {name:'성남IT고등학교',region:'경기',dept:'소프트웨어과·정보보안과',url:'https://www.snit.hs.kr'},
+  {name:'안양과학고등학교',region:'경기',dept:'컴퓨터정보과·전자통신과',url:'https://www.anyangsci.hs.kr'},
+  {name:'부천정보고등학교',region:'경기',dept:'소프트웨어개발과·정보통신과',url:'https://www.bcjh.hs.kr'},
+  // 인천
+  {name:'인천전자마이스터고등학교',region:'인천',dept:'임베디드소프트웨어과·전자통신과',url:'https://www.icems.hs.kr'},
+  {name:'인천디지털과학고등학교',region:'인천',dept:'소프트웨어개발과·정보통신과',url:'https://www.incheondigital.hs.kr'},
+  // 부산
+  {name:'부산소프트웨어마이스터고등학교',region:'부산',dept:'소프트웨어개발과·임베디드소프트웨어과',url:'https://www.bssm.hs.kr'},
+  {name:'부산디지털고등학교',region:'부산',dept:'정보통신과·소프트웨어과',url:'https://www.busandigital.hs.kr'},
+  {name:'부산컴퓨터과학고등학교',region:'부산',dept:'컴퓨터소프트웨어과·정보보안과',url:'https://www.bscs.hs.kr'},
+  // 대구
+  {name:'대구소프트웨어고등학교',region:'대구',dept:'소프트웨어개발과·인공지능과',url:'https://www.dgsw.hs.kr'},
+  {name:'대구디지털산업고등학교',region:'대구',dept:'정보통신과·컴퓨터과',url:'https://www.dgdigital.hs.kr'},
+  // 광주
+  {name:'광주소프트웨어마이스터고등학교',region:'광주',dept:'소프트웨어개발과·임베디드소프트웨어과',url:'https://www.gsm.hs.kr'},
+  {name:'광주정보고등학교',region:'광주',dept:'정보통신과·소프트웨어과',url:'https://www.gjinfo.hs.kr'},
+  // 대전
+  {name:'대덕소프트웨어마이스터고등학교',region:'대전',dept:'소프트웨어개발과·정보보안과',url:'https://www.dsmhs.hs.kr'},
+  {name:'대전디지털과학고등학교',region:'대전',dept:'컴퓨터정보과·전자통신과',url:'https://www.djdigital.hs.kr'},
+  // 울산
+  {name:'울산마이스터고등학교',region:'울산',dept:'소프트웨어개발과·스마트팩토리과',url:'https://www.usm.hs.kr'},
+  // 강원
+  {name:'강원정보고등학교',region:'강원',dept:'소프트웨어개발과·정보통신과',url:'https://www.gwinfo.hs.kr'},
+  // 충북
+  {name:'충북소프트웨어고등학교',region:'충북',dept:'소프트웨어개발과·정보보안과',url:'https://www.cbsw.hs.kr'},
+  // 충남
+  {name:'충남소프트웨어고등학교',region:'충남',dept:'소프트웨어개발과·정보통신과',url:'https://www.cnsw.hs.kr'},
+  // 전북
+  {name:'전북소프트웨어마이스터고등학교',region:'전북',dept:'소프트웨어개발과·임베디드소프트웨어과',url:'https://www.jbsm.hs.kr'},
+  // 전남
+  {name:'전남정보고등학교',region:'전남',dept:'정보통신과·소프트웨어과',url:'https://www.jninfo.hs.kr'},
+  // 경북
+  {name:'경북소프트웨어고등학교',region:'경북',dept:'소프트웨어개발과·정보통신과',url:'https://www.gbsw.hs.kr'},
+  // 경남
+  {name:'경남소프트웨어고등학교',region:'경남',dept:'소프트웨어개발과·정보보안과',url:'https://www.gnsw.hs.kr'},
+  // 제주
+  {name:'제주정보고등학교',region:'제주',dept:'정보통신과·소프트웨어과',url:'https://www.jejuinfo.hs.kr'},
+  // 세종
+  {name:'세종소프트웨어고등학교',region:'세종',dept:'소프트웨어개발과·인공지능과',url:'https://www.sjsw.hs.kr'},
+];
+
+let currentSchoolRegion = '전체';
+
+function renderSchoolRegionTabs(){
+  const regions = ['전체',...new Set(SPECIAL_SCHOOLS.map(s=>s.region))];
+  document.getElementById('school-region-tabs').innerHTML = regions.map(r=>
+    `<button class="yt-kw${r===currentSchoolRegion?' active':''}" onclick="selectSchoolRegion(this,'${r}')">${r}</button>`
+  ).join('');
+}
+
+function selectSchoolRegion(el, region){
+  currentSchoolRegion = region;
+  document.querySelectorAll('#school-region-tabs .yt-kw').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  renderSchoolList();
+}
+
+function renderSchoolList(){
+  const filtered = currentSchoolRegion==='전체'
+    ? SPECIAL_SCHOOLS
+    : SPECIAL_SCHOOLS.filter(s=>s.region===currentSchoolRegion);
+  document.getElementById('school-list').innerHTML = filtered.map(s=>`
+    <div class="gov-card" style="display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap">
+      <div style="flex:1;min-width:200px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="gov-badge blue" style="margin-bottom:0">${s.region}</span>
+          <span style="font-size:15px;font-weight:600">${s.name}</span>
+        </div>
+        <p style="margin-bottom:0;font-size:13px;color:#555"><i class="ti ti-books" style="font-size:13px;color:#185FA5;margin-right:4px"></i>${s.dept}</p>
+      </div>
+      <a class="gov-link blue" href="${s.url}" target="_blank" style="flex-shrink:0;align-self:center">홈페이지 <i class="ti ti-external-link"></i></a>
+    </div>`).join('');
+}
+
 /* ── 카테고리 / 상태 레이블 (전역 상수) ── */
 const CAT_LABELS={web:'웹 프론트엔드',be:'백엔드',data:'데이터',ai:'AI/ML',startup:'1인 창업',middle:'중년 과정',special:'특성화고',teacher:'강사 양성',cpp:'C++'};
 
@@ -927,6 +1019,16 @@ function openCourse(id){
       };
     });
   }
+  // 특성화고 탭 표시 여부 (special 카테고리 강의에서만 표시)
+  const schoolsBtn=document.getElementById('tab-btn-schools');
+  const isSpecial = c.cat==='special';
+  schoolsBtn.style.display = isSpecial ? '' : 'none';
+  if(isSpecial){
+    currentSchoolRegion='전체';
+    renderSchoolRegionTabs();
+    renderSchoolList();
+  }
+
   document.querySelectorAll('.detail-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
   document.querySelectorAll('.detail-section').forEach((s,i)=>s.classList.toggle('active',i===0));
   showPage('detail');
