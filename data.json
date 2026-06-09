@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "teacher1",
-      "cat": "teacher",
-      "icon": "ti-chalkboard",
-      "iconClass": "purple",
-      "title": "IT 강사 입문 과정",
-      "desc": "처음 강단에 서는 강사를 위한 강의 설계·전달력 훈련",
-      "level": "teacher",
-      "levelText": "강사입문",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "teacher2",
       "cat": "teacher",
       "icon": "ti-presentation",
