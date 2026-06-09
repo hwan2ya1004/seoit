@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "cpp1",
-      "cat": "cpp",
-      "icon": "ti-code",
-      "iconClass": "be",
-      "title": "C++ 기초 입문",
-      "desc": "변수·조건문·반복문부터 함수까지 — C++ 첫걸음",
-      "level": "beginner",
-      "levelText": "입문",
-      "status": "new",
-      "students": 0
-    },
-    {
       "id": "cpp2",
       "cat": "cpp",
       "icon": "ti-cpu",
