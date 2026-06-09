@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "nodejs",
-      "cat": "be",
-      "icon": "ti-server",
-      "iconClass": "be",
-      "title": "Node.js 백엔드",
-      "desc": "Express, REST API, JWT 인증 구현",
-      "level": "inter",
-      "levelText": "중급",
-      "status": "on",
-      "students": 15
-    },
-    {
       "id": "django",
       "cat": "be",
       "icon": "ti-brand-python",
