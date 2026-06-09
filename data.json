@@ -49,18 +49,6 @@
       "students": 0
     },
     {
-      "id": "ml",
-      "cat": "ai",
-      "icon": "ti-brain",
-      "iconClass": "ai",
-      "title": "머신러닝 기초",
-      "desc": "Scikit-learn으로 배우는 ML 알고리즘",
-      "level": "inter",
-      "levelText": "중급",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "ai",
       "cat": "ai",
       "icon": "ti-robot",
