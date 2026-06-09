@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "special3",
-      "cat": "special",
-      "icon": "ti-trophy",
-      "iconClass": "teal",
-      "title": "SW 경진대회 대비",
-      "desc": "전국 기능경기·SW올림피아드 출전 준비 과정",
-      "level": "special",
-      "levelText": "고교생",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "teacher1",
       "cat": "teacher",
       "icon": "ti-chalkboard",
