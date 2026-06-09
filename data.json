@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "special1",
-      "cat": "special",
-      "icon": "ti-school",
-      "iconClass": "teal",
-      "title": "특성화고 웹개발 기초",
-      "desc": "고교 특성화 과정 연계 — HTML/CSS/JS 입문",
-      "level": "special",
-      "levelText": "고교생",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "special3",
       "cat": "special",
       "icon": "ti-trophy",
