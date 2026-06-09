@@ -45,7 +45,7 @@
       "desc": "Express, REST API, JWT 인증 구현",
       "level": "inter",
       "levelText": "중급",
-      "status": "on",
+      "status": "off",
       "students": 15
     },
     {
