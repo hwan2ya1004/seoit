@@ -292,6 +292,17 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
 .enroll-info-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:1.5rem;justify-content:center}
 .enroll-info-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#666;background:#f5f5f3;padding:6px 14px;border-radius:20px;border:0.5px solid rgba(0,0,0,0.08)}
 .enroll-info-item i{color:#185FA5;font-size:14px}
+.enroll-talk-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:1.25rem;padding:13px;background:#03C75A;color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:600;font-family:inherit;cursor:pointer;text-decoration:none;transition:background .15s}
+.enroll-talk-btn:hover{background:#02a84c}
+.enroll-talk-btn img{width:22px;height:22px;flex-shrink:0}
+
+/* 네이버 톡톡 플로팅 버튼 */
+.talk-float{position:fixed;bottom:2rem;right:2rem;z-index:999;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none}
+.talk-float-btn{width:56px;height:56px;border-radius:50%;background:#03C75A;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(3,199,90,0.4);transition:transform .2s,box-shadow .2s}
+.talk-float:hover .talk-float-btn{transform:translateY(-3px);box-shadow:0 8px 24px rgba(3,199,90,0.5)}
+.talk-float-btn img{width:30px;height:30px}
+.talk-float-label{background:rgba(0,0,0,0.65);color:#fff;font-size:11px;padding:3px 9px;border-radius:20px;white-space:nowrap;opacity:0;transform:translateY(4px);transition:opacity .2s,transform .2s}
+.talk-float:hover .talk-float-label{opacity:1;transform:translateY(0)}
 .enroll-success{display:none;text-align:center;padding:2rem 1rem}
 .enroll-success .check-icon{width:64px;height:64px;background:#EAF3DE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:28px;color:#3B6D11}
 .enroll-success h3{font-size:18px;font-weight:700;margin-bottom:0.5rem}
@@ -448,11 +459,10 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
         <i class="ti ti-send"></i> 수강 신청하기
       </button>
 
-      <div class="enroll-info-row">
-        <div class="enroll-info-item"><i class="ti ti-phone"></i> 070-4177-1210</div>
-        <div class="enroll-info-item"><i class="ti ti-mail"></i> seohilab@naver.com</div>
-        <div class="enroll-info-item"><i class="ti ti-clock"></i> 평일 09:00 ~ 18:00</div>
-      </div>
+      <a href="http://talk.naver.com/WQZA680" target="_blank" class="enroll-talk-btn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="12" cy="11" rx="10" ry="8.5" fill="#fff" fill-opacity="0.25"/><path d="M12 2C6.477 2 2 6.03 2 11c0 2.83 1.37 5.35 3.53 7.07L4.5 22l4.13-2.07A11.3 11.3 0 0 0 12 20c5.523 0 10-4.03 10-9S17.523 2 12 2Z" fill="#fff"/><path d="M7.5 10.5h2M10.5 10.5h4M7.5 13h5" stroke="#03C75A" stroke-width="1.5" stroke-linecap="round"/></svg>
+        네이버 톡톡으로 문의하기
+      </a>
     </div>
 
     <div class="enroll-form-card enroll-success" id="enroll-success-wrap">
@@ -724,6 +734,17 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
 
 <!-- Toast -->
 <div class="toast" id="toast"></div>
+
+<!-- 네이버 톡톡 플로팅 버튼 -->
+<a href="http://talk.naver.com/WQZA680" target="_blank" class="talk-float" title="네이버 톡톡 상담">
+  <div class="talk-float-btn">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C6.477 2 2 6.03 2 11c0 2.83 1.37 5.35 3.53 7.07L4.5 22l4.13-2.07A11.3 11.3 0 0 0 12 20c5.523 0 10-4.03 10-9S17.523 2 12 2Z" fill="#fff"/>
+      <path d="M7.5 10.5h2M10.5 10.5h4M7.5 13h5" stroke="#03C75A" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <span class="talk-float-label">네이버 톡톡 상담</span>
+</a>
 
 <script>
 /* ── 전화번호 자동 하이픈 포맷팅 ── */
