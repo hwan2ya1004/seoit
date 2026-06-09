@@ -267,14 +267,6 @@
   ],
   "students": [
     {
-      "id": "s4",
-      "name": "최유진",
-      "course": "데이터 분석 입문",
-      "courseId": "data",
-      "date": "2025.04.10",
-      "status": "off"
-    },
-    {
       "id": "enroll_1780994051601",
       "name": "김성환",
       "course": "1인 창업 바이브코딩",
