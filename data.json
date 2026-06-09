@@ -265,14 +265,5 @@
       "students": 0
     }
   ],
-  "students": [
-    {
-      "id": "s4",
-      "name": "최유진",
-      "course": "데이터 분석 입문",
-      "courseId": "data",
-      "date": "2025.04.10",
-      "status": "off"
-    }
-  ]
+  "students": []
 }
