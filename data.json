@@ -267,14 +267,6 @@
   ],
   "students": [
     {
-      "id": "s2",
-      "name": "이서연",
-      "course": "Spring Boot",
-      "courseId": "spring",
-      "date": "2025.05.28",
-      "status": "on"
-    },
-    {
       "id": "s3",
       "name": "박지호",
       "course": "딥러닝 / PyTorch",
