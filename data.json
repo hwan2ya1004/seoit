@@ -117,8 +117,8 @@
       "desc": "신경망 설계부터 모델 배포까지",
       "level": "adv",
       "levelText": "고급",
-      "status": "on",
-      "students": 22
+      "status": "off",
+      "students": 0
     },
     {
       "id": "vibe",
