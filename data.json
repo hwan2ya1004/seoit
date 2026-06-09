@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "react",
-      "cat": "web",
-      "icon": "ti-brand-react",
-      "iconClass": "web",
-      "title": "React 풀스택",
-      "desc": "React + Node.js + DB로 실제 서비스 만들기",
-      "level": "inter",
-      "levelText": "중급",
-      "status": "on",
-      "students": 48
-    },
-    {
       "id": "nodejs",
       "cat": "be",
       "icon": "ti-server",
