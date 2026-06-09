@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "django",
-      "cat": "be",
-      "icon": "ti-brand-python",
-      "iconClass": "be",
-      "title": "Django REST API",
-      "desc": "Python으로 만드는 백엔드 서비스",
-      "level": "inter",
-      "levelText": "중급",
-      "status": "on",
-      "students": 10
-    },
-    {
       "id": "spring",
       "cat": "be",
       "icon": "ti-leaf",
