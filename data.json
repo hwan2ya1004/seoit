@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "middle3",
-      "cat": "middle",
-      "icon": "ti-sparkles",
-      "iconClass": "pink",
-      "title": "중년을 위한 AI 활용법",
-      "desc": "ChatGPT·AI 도구로 업무와 생활을 스마트하게",
-      "level": "middle",
-      "levelText": "입문",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "special1",
       "cat": "special",
       "icon": "ti-school",
