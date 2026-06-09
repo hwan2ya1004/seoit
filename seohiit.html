@@ -1643,18 +1643,34 @@ function renderCourseTabs(){
 /* ══════════════════════════════════════
    초기화
 ══════════════════════════════════════ */
-// 기본 데이터 로드 (data.json에서 fetch 시도 — file:// 프로토콜에서는 건너뜀)
+// 기본 데이터 로드: GitHub API → data.json 순으로 시도
 (async function init(){
-  if(location.protocol !== 'file:'){
+  let loaded = false;
+
+  // 1) GitHub API에서 최신 데이터 가져오기 (항상 최신 반영)
+  if(isGithubConfigured()){
     try{
-      const res=await fetch('data.json?_='+Date.now());
-      if(res.ok){
-        const data=await res.json();
-        COURSES=data.courses||COURSES;
-        STUDENTS=data.students||STUDENTS;
+      const ghData = await fetchFromGithub();
+      if(ghData){
+        COURSES = ghData.courses || COURSES;
+        STUDENTS = ghData.students || STUDENTS;
+        loaded = true;
       }
     }catch(e){}
   }
+
+  // 2) GitHub 미설정이거나 실패 시 data.json fallback (file:// 제외)
+  if(!loaded && location.protocol !== 'file:'){
+    try{
+      const res = await fetch('data.json?_='+Date.now());
+      if(res.ok){
+        const data = await res.json();
+        COURSES = data.courses || COURSES;
+        STUDENTS = data.students || STUDENTS;
+      }
+    }catch(e){}
+  }
+
   renderCourseTabs();
   renderEnrollDropdown();
   renderCourses('all');
