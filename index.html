@@ -428,7 +428,7 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
       </div>
       <div class="enroll-field">
         <label>연락처 *</label>
-        <input type="tel" id="enroll-phone" placeholder="예: 010-1234-5678">
+        <input type="tel" id="enroll-phone" placeholder="예: 010-1234-5678" oninput="formatPhone(this)" maxlength="13">
       </div>
       <div class="enroll-field">
         <label>수강 희망 강의 *</label>
@@ -719,6 +719,14 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
 <div class="toast" id="toast"></div>
 
 <script>
+/* ── 전화번호 자동 하이픈 포맷팅 ── */
+function formatPhone(input){
+  let v=input.value.replace(/\D/g,'');
+  if(v.length<=3) input.value=v;
+  else if(v.length<=7) input.value=v.slice(0,3)+'-'+v.slice(3);
+  else input.value=v.slice(0,3)+'-'+v.slice(3,7)+'-'+v.slice(7,11);
+}
+
 /* ── GitHub 설정 (고정값 — Vercel 환경변수에서 토큰 자동 로드) ── */
 const GH_OWNER = 'hwan2ya1004';
 const GH_REPO  = 'seoit';
