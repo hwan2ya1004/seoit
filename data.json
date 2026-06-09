@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "html",
-      "cat": "web",
-      "icon": "ti-brand-html5",
-      "iconClass": "web",
-      "title": "HTML/CSS 기초",
-      "desc": "웹 개발 첫걸음, 레이아웃과 스타일링",
-      "level": "beginner",
-      "levelText": "입문",
-      "status": "on",
-      "students": 12
-    },
-    {
       "id": "js",
       "cat": "web",
       "icon": "ti-brand-javascript",
