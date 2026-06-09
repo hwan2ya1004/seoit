@@ -265,14 +265,5 @@
       "students": 0
     }
   ],
-  "students": [
-    {
-      "id": "enroll_1780994051601",
-      "name": "김성환",
-      "course": "1인 창업 바이브코딩",
-      "courseId": "vibe",
-      "date": "2026.06.09",
-      "status": "new"
-    }
-  ]
+  "students": []
 }
