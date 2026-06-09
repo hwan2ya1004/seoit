@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "cpp2",
-      "cat": "cpp",
-      "icon": "ti-cpu",
-      "iconClass": "be",
-      "title": "C++ 객체지향 프로그래밍",
-      "desc": "클래스·상속·다형성으로 배우는 OOP 핵심 개념",
-      "level": "inter",
-      "levelText": "중급",
-      "status": "new",
-      "students": 0
-    },
-    {
       "id": "cpp3",
       "cat": "cpp",
       "icon": "ti-tournament",
