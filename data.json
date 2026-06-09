@@ -267,14 +267,6 @@
   ],
   "students": [
     {
-      "id": "s1",
-      "name": "김민준",
-      "course": "React 풀스택",
-      "courseId": "react",
-      "date": "2025.06.01",
-      "status": "new"
-    },
-    {
       "id": "s2",
       "name": "이서연",
       "course": "Spring Boot",
