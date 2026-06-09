@@ -916,8 +916,7 @@ async function fetchYoutube(query){
   const result=document.getElementById('yt-result');
   result.innerHTML='<div class="yt-loading"><i class="ti ti-loader"></i> 영상 불러오는 중...</div>';
   try{
-    const today=new Date().toISOString().slice(0,10);
-    const url=`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&type=video&maxResults=12&relevanceLanguage=ko&order=date&key=${API_KEY}&_date=${today}`;
+    const url=`/api/youtube?q=${encodeURIComponent(query)}`;
     const res=await fetch(url);const data=await res.json();
     if(data.error){result.innerHTML=`<div class="yt-error">오류: ${data.error.message}</div>`;return;}
     if(!data.items||!data.items.length){result.innerHTML='<div class="yt-error">검색 결과가 없습니다.</div>';return;}
