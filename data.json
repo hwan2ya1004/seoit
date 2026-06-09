@@ -49,18 +49,6 @@
       "students": 0
     },
     {
-      "id": "sql",
-      "cat": "data",
-      "icon": "ti-database",
-      "iconClass": "data",
-      "title": "SQL & 데이터베이스",
-      "desc": "MySQL, PostgreSQL 실전 쿼리 작성",
-      "level": "beginner",
-      "levelText": "입문",
-      "status": "off",
-      "students": 0
-    },
-    {
       "id": "ml",
       "cat": "ai",
       "icon": "ti-brain",
