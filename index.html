@@ -828,37 +828,33 @@ const COURSE_DETAIL = {
 
 let currentCourseId=null, currentYtQuery='';
 
-/* ── 전국 특성화고 데이터 ── */
-const SPECIAL_SCHOOLS = [
-  // 서울
-  {name:'미림마이스터고등학교',region:'서울',dept:'뉴미디어소프트웨어과·뉴미디어디자인과',url:'https://www.mirim.hs.kr'},
-  {name:'서울디지텍고등학교',region:'서울',dept:'소프트웨어개발과·정보통신과·인터넷보안과',url:'https://digitec.hs.kr'},
-  {name:'한국IT고등학교',region:'서울',dept:'소프트웨어개발과·정보보안과',url:'https://www.koreaithigh.hs.kr'},
-  // 경기
-  {name:'경기게임마이스터고등학교',region:'경기',dept:'게임소프트웨어과·게임그래픽과',url:'https://www.ggmhs.hs.kr'},
-  {name:'수원정보과학고등학교',region:'경기',dept:'소프트웨어개발과·정보통신과',url:'https://www.suwonit.hs.kr'},
-  {name:'성남IT고등학교',region:'경기',dept:'소프트웨어과·정보보안과',url:'https://www.snit.hs.kr'},
-  {name:'부천정보고등학교',region:'경기',dept:'소프트웨어개발과·정보통신과',url:'https://www.bcjh.hs.kr'},
-  // 인천
-  {name:'인천전자마이스터고등학교',region:'인천',dept:'임베디드소프트웨어과·전자통신과',url:'https://www.icems.hs.kr'},
-  // 부산
-  {name:'부산소프트웨어마이스터고등학교',region:'부산',dept:'소프트웨어개발과·임베디드소프트웨어과',url:'https://www.bssm.hs.kr'},
-  // 대구
-  {name:'대구소프트웨어고등학교',region:'대구',dept:'소프트웨어개발과·인공지능과',url:'https://www.dgsw.hs.kr'},
-  // 광주
-  {name:'광주소프트웨어마이스터고등학교',region:'광주',dept:'소프트웨어개발과·임베디드소프트웨어과',url:'https://www.gsm.hs.kr'},
-  // 대전
-  {name:'대덕소프트웨어마이스터고등학교',region:'대전',dept:'소프트웨어개발과·정보보안과',url:'https://www.dsmhs.hs.kr'},
-  // 경북
-  {name:'경북소프트웨어고등학교',region:'경북',dept:'소프트웨어개발과·정보통신과',url:'https://www.gbsw.hs.kr'},
-  // 경남
-  {name:'경남소프트웨어고등학교',region:'경남',dept:'소프트웨어개발과·정보보안과',url:'https://www.gnsw.hs.kr'},
-];
-
+/* ── 전국 특성화고 데이터 (NEIS API 연동) ── */
+let SPECIAL_SCHOOLS = []; // NEIS API에서 동적으로 로드
 let currentSchoolRegion = '전체';
+let neisSchoolsLoaded = false;
+
+async function loadNeisSchools(){
+  if(neisSchoolsLoaded) return;
+  const listEl = document.getElementById('school-list');
+  const tabsEl = document.getElementById('school-region-tabs');
+  listEl.innerHTML = '<div class="yt-loading"><i class="ti ti-loader"></i> 학교 정보를 불러오는 중...</div>';
+  tabsEl.innerHTML = '';
+  try{
+    const res = await fetch('/api/neis');
+    if(!res.ok) throw new Error('API 응답 오류');
+    const data = await res.json();
+    if(data.error) throw new Error(data.error);
+    SPECIAL_SCHOOLS = data.schools || [];
+    neisSchoolsLoaded = true;
+    renderSchoolRegionTabs();
+    renderSchoolList();
+  }catch(e){
+    listEl.innerHTML = `<div class="yt-error"><i class="ti ti-alert-circle" style="margin-right:6px"></i>학교 정보를 불러오지 못했습니다. (${e.message})</div>`;
+  }
+}
 
 function renderSchoolRegionTabs(){
-  const regions = ['전체',...new Set(SPECIAL_SCHOOLS.map(s=>s.region))];
+  const regions = ['전체',...new Set(SPECIAL_SCHOOLS.map(s=>s.region))].sort((a,b)=>a==='전체'?-1:b==='전체'?1:a.localeCompare(b,'ko'));
   document.getElementById('school-region-tabs').innerHTML = regions.map(r=>
     `<button class="yt-kw${r===currentSchoolRegion?' active':''}" onclick="selectSchoolRegion(this,'${r}')">${r}</button>`
   ).join('');
@@ -875,6 +871,10 @@ function renderSchoolList(){
   const filtered = currentSchoolRegion==='전체'
     ? SPECIAL_SCHOOLS
     : SPECIAL_SCHOOLS.filter(s=>s.region===currentSchoolRegion);
+  if(!filtered.length){
+    document.getElementById('school-list').innerHTML='<div class="yt-error">해당 지역의 학교 정보가 없습니다.</div>';
+    return;
+  }
   document.getElementById('school-list').innerHTML = filtered.map(s=>`
     <div class="gov-card" style="display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap">
       <div style="flex:1;min-width:200px">
@@ -883,8 +883,9 @@ function renderSchoolList(){
           <span style="font-size:15px;font-weight:600">${s.name}</span>
         </div>
         <p style="margin-bottom:0;font-size:13px;color:#555"><i class="ti ti-books" style="font-size:13px;color:#185FA5;margin-right:4px"></i>${s.dept}</p>
+        ${s.address?`<p style="margin-top:4px;margin-bottom:0;font-size:12px;color:#888"><i class="ti ti-map-pin" style="font-size:12px;color:#aaa;margin-right:4px"></i>${s.address}</p>`:''}
       </div>
-      <a class="gov-link blue" href="${s.url}" target="_blank" style="flex-shrink:0;align-self:center">홈페이지 <i class="ti ti-external-link"></i></a>
+      ${s.url?`<a class="gov-link blue" href="${s.url}" target="_blank" style="flex-shrink:0;align-self:center">홈페이지 <i class="ti ti-external-link"></i></a>`:'<span style="flex-shrink:0;align-self:center;font-size:12px;color:#aaa">홈페이지 없음</span>'}
     </div>`).join('');
 }
 
@@ -1000,8 +1001,8 @@ function openCourse(id){
   schoolsBtn.style.display = isSpecial ? '' : 'none';
   if(isSpecial){
     currentSchoolRegion='전체';
-    renderSchoolRegionTabs();
-    renderSchoolList();
+    // NEIS API에서 학교 데이터 로드 (최초 1회만 호출)
+    loadNeisSchools();
   }
 
   document.querySelectorAll('.detail-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
