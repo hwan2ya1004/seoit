@@ -514,7 +514,7 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
     <div class="tab-bar">
       <button class="tab active" onclick="adminTab(this,'admin-courses')">강의 관리</button>
       <button class="tab" id="tab-students-btn" onclick="adminTab(this,'admin-students')">수강생 관리</button>
-      <button class="tab" id="tab-settings-btn" onclick="adminTab(this,'admin-settings')"><i class="ti ti-settings" style="font-size:13px;margin-right:4px"></i>GitHub 설정</button>
+      <button class="tab" id="tab-settings-btn" onclick="adminTab(this,'admin-settings')"><i class="ti ti-key" style="font-size:13px;margin-right:4px"></i>자동 저장 설정</button>
     </div>
 
     <!-- 강의 관리 -->
@@ -544,31 +544,29 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
       </table>
     </div>
 
-    <!-- GitHub 설정 -->
+    <!-- 자동 저장 설정 (Token만 입력) -->
     <div id="admin-settings" style="display:none">
-      <div style="max-width:520px">
-        <div class="section-title" style="font-size:16px;margin-bottom:0.4rem">GitHub 저장소 설정</div>
-        <div class="section-sub" style="margin-bottom:1.5rem">데이터를 GitHub에 저장하면 Vercel 배포 후에도 데이터가 유지됩니다.</div>
-        <div class="form-group">
-          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">GitHub 사용자명 (owner) *</label>
-          <input type="text" id="cfg-owner" placeholder="예: hwan2ya1004" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
+      <div style="max-width:480px">
+        <div class="section-title" style="font-size:16px;margin-bottom:0.4rem"><i class="ti ti-key" style="color:#185FA5;margin-right:6px"></i>자동 저장 설정</div>
+        <div class="section-sub" style="margin-bottom:1.5rem">
+          저장소(<strong>hwan2ya1004/seoit</strong>)는 이미 연결되어 있습니다.<br>
+          GitHub Personal Access Token만 입력하면 강의·수강생 데이터가 자동으로 저장됩니다.
+        </div>
+        <div style="background:#E6F1FB;border-radius:10px;padding:10px 14px;font-size:12px;color:#0C447C;margin-bottom:1.25rem;display:flex;align-items:center;gap:8px">
+          <i class="ti ti-info-circle" style="font-size:16px;flex-shrink:0"></i>
+          Token은 이 기기의 브라우저에만 저장되며 외부로 전송되지 않습니다.
         </div>
         <div class="form-group">
-          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">저장소 이름 (repo) *</label>
-          <input type="text" id="cfg-repo" placeholder="예: seoit" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
-        </div>
-        <div class="form-group">
-          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">파일 경로 (path)</label>
-          <input type="text" id="cfg-path" placeholder="data.json" style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="data.json">
-        </div>
-        <div class="form-group">
-          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">Personal Access Token *</label>
-          <input type="password" id="cfg-token" placeholder="ghp_..." style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:9px 13px;font-size:14px;font-family:inherit;outline:none" value="">
+          <label style="font-size:12px;font-weight:600;color:#555;display:block;margin-bottom:5px">GitHub Personal Access Token *</label>
+          <input type="password" id="cfg-token" placeholder="ghp_..." style="width:100%;border:0.5px solid rgba(0,0,0,0.2);border-radius:10px;padding:10px 14px;font-size:14px;font-family:inherit;outline:none">
         </div>
         <div id="cfg-result" style="display:none;font-size:13px;padding:10px 14px;background:#f5f5f3;border-radius:8px;margin-bottom:1rem"></div>
         <div style="display:flex;gap:8px">
           <button class="action-btn" onclick="testGithubConnection()" style="flex:1;padding:10px;font-size:14px"><i class="ti ti-plug"></i> 연결 테스트</button>
-          <button class="btn-primary" onclick="saveGithubConfig()" style="flex:1;padding:10px;font-size:14px"><i class="ti ti-device-floppy"></i> 설정 저장</button>
+          <button class="btn-primary" onclick="saveGithubConfig()" style="flex:1;padding:10px;font-size:14px"><i class="ti ti-device-floppy"></i> 저장 적용</button>
+        </div>
+        <div style="margin-top:1rem;font-size:12px;color:#aaa">
+          Token이 없으신가요? <a href="https://github.com/settings/tokens/new?scopes=repo&description=seoit-admin" target="_blank" style="color:#185FA5;text-decoration:underline">GitHub에서 발급받기 →</a>
         </div>
       </div>
     </div>
@@ -722,20 +720,24 @@ footer{border-top:0.5px solid rgba(0,0,0,0.1);background:#fff;padding:2.5rem 2re
 <div class="toast" id="toast"></div>
 
 <script>
-/* ── GitHub 설정 ── */
-const GH_STORAGE_KEY = 'seohiit_gh_config';
-let GH_CONFIG = (function(){
-  try {
-    const saved = localStorage.getItem(GH_STORAGE_KEY);
-    if(saved) return JSON.parse(saved);
-  } catch(e){}
-  return {
-    owner: 'hwan2ya1004',
-    repo: 'seoit',
-    path: 'data.json',
-    token: ''
-  };
+/* ── GitHub 설정 (고정값 — 원클릭 자동 배포) ── */
+const GH_OWNER = 'hwan2ya1004';
+const GH_REPO  = 'seoit';
+const GH_PATH  = 'data.json';
+const GH_TOKEN_KEY = 'seohiit_gh_token';
+
+// Token만 localStorage에서 관리
+let GH_TOKEN = (function(){
+  try { return localStorage.getItem(GH_TOKEN_KEY) || ''; } catch(e){ return ''; }
 })();
+
+// 하위 호환용 래퍼 (기존 코드가 GH_CONFIG를 참조하는 곳 대응)
+const GH_CONFIG = {
+  get owner(){ return GH_OWNER; },
+  get repo(){  return GH_REPO;  },
+  get path(){  return GH_PATH;  },
+  get token(){ return GH_TOKEN; }
+};
 
 /* ── 앱 데이터 ── */
 let COURSES = [
@@ -1389,15 +1391,12 @@ function openGithubConfig(){
 }
 
 async function saveGithubConfig(){
-  const owner=document.getElementById('cfg-owner').value.trim();
-  const repo=document.getElementById('cfg-repo').value.trim();
-  const path=document.getElementById('cfg-path').value.trim()||'data.json';
   const token=document.getElementById('cfg-token').value.trim();
-  if(!owner||!repo||!token){showToast('모든 필드를 입력해 주세요.','error');return;}
-  GH_CONFIG={owner,repo,path,token};
-  try{localStorage.setItem(GH_STORAGE_KEY,JSON.stringify(GH_CONFIG));}catch(e){}
+  if(!token){showToast('Token을 입력해 주세요.','error');return;}
+  GH_TOKEN=token;
+  try{localStorage.setItem(GH_TOKEN_KEY,token);}catch(e){}
   document.getElementById('github-notice').style.display='none';
-  showToast('설정이 저장되었습니다. 연결을 테스트해 보세요.','success');
+  showToast('Token이 저장되었습니다! 이제 데이터가 자동으로 GitHub에 저장됩니다.','success');
 }
 
 async function testGithubConnection(){
@@ -1406,21 +1405,18 @@ async function testGithubConnection(){
   result.style.color='#888';
   result.textContent='연결 테스트 중...';
 
-  const owner=document.getElementById('cfg-owner').value.trim();
-  const repo=document.getElementById('cfg-repo').value.trim();
-  const path=document.getElementById('cfg-path').value.trim()||'data.json';
   const token=document.getElementById('cfg-token').value.trim();
-  if(!owner||!repo||!token){result.style.color='#c0392b';result.textContent='모든 필드를 입력해 주세요.';return;}
+  if(!token){result.style.color='#c0392b';result.textContent='Token을 입력해 주세요.';return;}
 
   try{
-    const url=`https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+    const url=`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_PATH}`;
     const res=await fetch(url,{headers:{Authorization:`token ${token}`,Accept:'application/vnd.github.v3+json'}});
     if(res.ok){
       result.style.color='#3B6D11';
-      result.textContent='✓ 연결 성공! 파일을 찾았습니다. 저장 버튼을 눌러 설정을 적용하세요.';
+      result.textContent='✓ 연결 성공! hwan2ya1004/seoit 저장소에 접근되었습니다. 저장 적용 버튼을 눌러 완료하세요.';
     } else if(res.status===404){
       result.style.color='#854F0B';
-      result.textContent='⚠ 저장소 또는 파일을 찾을 수 없습니다. 저장소에 data.json 파일을 먼저 push해 주세요.';
+      result.textContent='⚠ data.json 파일을 찾을 수 없습니다. GitHub에 파일이 push되어 있는지 확인해 주세요.';
     } else if(res.status===401){
       result.style.color='#c0392b';
       result.textContent='✗ 인증 실패. Token을 확인해 주세요.';
