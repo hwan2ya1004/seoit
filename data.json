@@ -1,4 +1,311 @@
 {
-  "courses": [],
-  "students": []
+  "courses": [
+    {
+      "id": "html",
+      "cat": "web",
+      "icon": "ti-brand-html5",
+      "iconClass": "web",
+      "title": "HTML/CSS 기초",
+      "desc": "웹 개발 첫걸음, 레이아웃과 스타일링",
+      "level": "beginner",
+      "levelText": "입문",
+      "status": "on",
+      "students": 12
+    },
+    {
+      "id": "js",
+      "cat": "web",
+      "icon": "ti-brand-javascript",
+      "iconClass": "web",
+      "title": "JavaScript 심화",
+      "desc": "ES6+, 비동기, DOM 조작 마스터",
+      "level": "inter",
+      "levelText": "중급",
+      "status": "on",
+      "students": 20
+    },
+    {
+      "id": "react",
+      "cat": "web",
+      "icon": "ti-brand-react",
+      "iconClass": "web",
+      "title": "React 풀스택",
+      "desc": "React + Node.js + DB로 실제 서비스 만들기",
+      "level": "inter",
+      "levelText": "중급",
+      "status": "on",
+      "students": 48
+    },
+    {
+      "id": "nodejs",
+      "cat": "be",
+      "icon": "ti-server",
+      "iconClass": "be",
+      "title": "Node.js 백엔드",
+      "desc": "Express, REST API, JWT 인증 구현",
+      "level": "inter",
+      "levelText": "중급",
+      "status": "on",
+      "students": 15
+    },
+    {
+      "id": "django",
+      "cat": "be",
+      "icon": "ti-brand-python",
+      "iconClass": "be",
+      "title": "Django REST API",
+      "desc": "Python으로 만드는 백엔드 서비스",
+      "level": "inter",
+      "levelText": "중급",
+      "status": "on",
+      "students": 10
+    },
+    {
+      "id": "spring",
+      "cat": "be",
+      "icon": "ti-leaf",
+      "iconClass": "be",
+      "title": "Spring Boot",
+      "desc": "Java 기반 기업형 백엔드 개발",
+      "level": "adv",
+      "levelText": "고급",
+      "status": "on",
+      "students": 35
+    },
+    {
+      "id": "data",
+      "cat": "data",
+      "icon": "ti-chart-bar",
+      "iconClass": "data",
+      "title": "데이터 분석 입문",
+      "desc": "Python, Pandas로 데이터 다루기",
+      "level": "beginner",
+      "levelText": "입문",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "sql",
+      "cat": "data",
+      "icon": "ti-database",
+      "iconClass": "data",
+      "title": "SQL & 데이터베이스",
+      "desc": "MySQL, PostgreSQL 실전 쿼리 작성",
+      "level": "beginner",
+      "levelText": "입문",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "ml",
+      "cat": "ai",
+      "icon": "ti-brain",
+      "iconClass": "ai",
+      "title": "머신러닝 기초",
+      "desc": "Scikit-learn으로 배우는 ML 알고리즘",
+      "level": "inter",
+      "levelText": "중급",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "ai",
+      "cat": "ai",
+      "icon": "ti-robot",
+      "iconClass": "ai",
+      "title": "딥러닝 / PyTorch",
+      "desc": "신경망 설계부터 모델 배포까지",
+      "level": "adv",
+      "levelText": "고급",
+      "status": "on",
+      "students": 22
+    },
+    {
+      "id": "vibe",
+      "cat": "startup",
+      "icon": "ti-rocket",
+      "iconClass": "coral",
+      "title": "1인 창업 바이브코딩",
+      "desc": "코딩 몰라도 OK — 40대 이상을 위한 AI 창업 실전",
+      "level": "beginner",
+      "levelText": "비전공자",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "middle1",
+      "cat": "middle",
+      "icon": "ti-device-desktop",
+      "iconClass": "pink",
+      "title": "중년을 위한 컴퓨터 기초",
+      "desc": "마우스부터 인터넷까지 — 처음 시작하는 디지털 생활",
+      "level": "middle",
+      "levelText": "왕초보",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "middle2",
+      "cat": "middle",
+      "icon": "ti-brand-office",
+      "iconClass": "pink",
+      "title": "스마트폰 & 엑셀 활용",
+      "desc": "일상과 업무에 바로 쓰는 스마트폰·문서 작성 스킬",
+      "level": "middle",
+      "levelText": "왕초보",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "middle3",
+      "cat": "middle",
+      "icon": "ti-sparkles",
+      "iconClass": "pink",
+      "title": "중년을 위한 AI 활용법",
+      "desc": "ChatGPT·AI 도구로 업무와 생활을 스마트하게",
+      "level": "middle",
+      "levelText": "입문",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "special1",
+      "cat": "special",
+      "icon": "ti-school",
+      "iconClass": "teal",
+      "title": "특성화고 웹개발 기초",
+      "desc": "고교 특성화 과정 연계 — HTML/CSS/JS 입문",
+      "level": "special",
+      "levelText": "고교생",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "special3",
+      "cat": "special",
+      "icon": "ti-trophy",
+      "iconClass": "teal",
+      "title": "SW 경진대회 대비",
+      "desc": "전국 기능경기·SW올림피아드 출전 준비 과정",
+      "level": "special",
+      "levelText": "고교생",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "teacher1",
+      "cat": "teacher",
+      "icon": "ti-chalkboard",
+      "iconClass": "purple",
+      "title": "IT 강사 입문 과정",
+      "desc": "처음 강단에 서는 강사를 위한 강의 설계·전달력 훈련",
+      "level": "teacher",
+      "levelText": "강사입문",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "teacher2",
+      "cat": "teacher",
+      "icon": "ti-presentation",
+      "iconClass": "purple",
+      "title": "온라인 강의 제작",
+      "desc": "OBS·편집 툴로 나만의 온라인 강의 콘텐츠 만들기",
+      "level": "teacher",
+      "levelText": "강사심화",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "teacher3",
+      "cat": "teacher",
+      "icon": "ti-award",
+      "iconClass": "purple",
+      "title": "강사 자격증 & 취업",
+      "desc": "HRD 강사 자격증 취득부터 학원·기업 강의 취업까지",
+      "level": "inter",
+      "levelText": "강사심화",
+      "status": "off",
+      "students": 0
+    },
+    {
+      "id": "cpp1",
+      "cat": "cpp",
+      "icon": "ti-code",
+      "iconClass": "be",
+      "title": "C++ 기초 입문",
+      "desc": "변수·조건문·반복문부터 함수까지 — C++ 첫걸음",
+      "level": "beginner",
+      "levelText": "입문",
+      "status": "new",
+      "students": 0
+    },
+    {
+      "id": "cpp2",
+      "cat": "cpp",
+      "icon": "ti-cpu",
+      "iconClass": "be",
+      "title": "C++ 객체지향 프로그래밍",
+      "desc": "클래스·상속·다형성으로 배우는 OOP 핵심 개념",
+      "level": "inter",
+      "levelText": "중급",
+      "status": "new",
+      "students": 0
+    },
+    {
+      "id": "cpp3",
+      "cat": "cpp",
+      "icon": "ti-tournament",
+      "iconClass": "be",
+      "title": "C++ 자료구조 & 알고리즘",
+      "desc": "STL 컨테이너와 정렬·탐색·그래프 알고리즘 실전",
+      "level": "adv",
+      "levelText": "고급",
+      "status": "new",
+      "students": 0
+    }
+  ],
+  "students": [
+    {
+      "id": "s1",
+      "name": "김민준",
+      "course": "React 풀스택",
+      "courseId": "react",
+      "date": "2025.06.01",
+      "status": "new"
+    },
+    {
+      "id": "s2",
+      "name": "이서연",
+      "course": "Spring Boot",
+      "courseId": "spring",
+      "date": "2025.05.28",
+      "status": "on"
+    },
+    {
+      "id": "s3",
+      "name": "박지호",
+      "course": "딥러닝 / PyTorch",
+      "courseId": "ai",
+      "date": "2025.05.20",
+      "status": "on"
+    },
+    {
+      "id": "s4",
+      "name": "최유진",
+      "course": "데이터 분석 입문",
+      "courseId": "data",
+      "date": "2025.04.10",
+      "status": "off"
+    },
+    {
+      "id": "enroll_1780994051601",
+      "name": "김성환",
+      "phone": "01049311210",
+      "course": "1인 창업 바이브코딩",
+      "courseId": "vibe",
+      "date": "2026.06.09",
+      "status": "new"
+    }
+  ]
 }
