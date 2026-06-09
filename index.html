@@ -958,10 +958,63 @@ function renderGov(type){
 }
 
 /* ══════════════════════════════════════
-   관리자 비밀번호 모달
+   관리자 세션 관리 (10분 무활동 자동 로그아웃)
 ══════════════════════════════════════ */
 const ADMIN_PW='seohiit2026';
+const ADMIN_SESSION_KEY='seohiit_admin_session';
+const ADMIN_TIMEOUT=10*60*1000; // 10분 (ms)
+let adminAutoLogoutTimer=null;
+
+function isAdminLoggedIn(){
+  try{
+    const t=sessionStorage.getItem(ADMIN_SESSION_KEY);
+    if(!t) return false;
+    if(Date.now()-parseInt(t)>ADMIN_TIMEOUT){
+      sessionStorage.removeItem(ADMIN_SESSION_KEY);
+      return false;
+    }
+    return true;
+  }catch(e){return false;}
+}
+
+function setAdminSession(){
+  try{sessionStorage.setItem(ADMIN_SESSION_KEY,Date.now().toString());}catch(e){}
+}
+
+function clearAdminSession(){
+  try{sessionStorage.removeItem(ADMIN_SESSION_KEY);}catch(e){}
+  if(adminAutoLogoutTimer){clearTimeout(adminAutoLogoutTimer);adminAutoLogoutTimer=null;}
+}
+
+function resetAdminTimer(){
+  if(!isAdminLoggedIn()) return;
+  setAdminSession();
+  if(adminAutoLogoutTimer) clearTimeout(adminAutoLogoutTimer);
+  adminAutoLogoutTimer=setTimeout(()=>{
+    clearAdminSession();
+    // 현재 관리자 페이지에 있으면 홈으로 이동
+    if(document.getElementById('page-admin').classList.contains('active')){
+      showPage('main');
+      showToast('10분간 활동이 없어 자동 로그아웃되었습니다.','error');
+    }
+  },ADMIN_TIMEOUT);
+}
+
+// 관리자 페이지 내 클릭/키 입력 시 타이머 리셋
+document.addEventListener('click',()=>{
+  if(document.getElementById('page-admin')?.classList.contains('active')) resetAdminTimer();
+});
+document.addEventListener('keydown',()=>{
+  if(document.getElementById('page-admin')?.classList.contains('active')) resetAdminTimer();
+});
+
 function openAdminModal(){
+  // 이미 로그인된 세션이 있으면 바로 관리자 페이지로
+  if(isAdminLoggedIn()){
+    resetAdminTimer();
+    showPage('admin');
+    return;
+  }
   const overlay=document.getElementById('admin-modal-overlay');
   const input=document.getElementById('admin-pw-input');
   const err=document.getElementById('admin-modal-error');
@@ -978,6 +1031,8 @@ function confirmAdmin(){
   const err=document.getElementById('admin-modal-error');
   if(input.value===ADMIN_PW){
     document.getElementById('admin-modal-overlay').classList.remove('open');
+    setAdminSession();
+    resetAdminTimer();
     showPage('admin');
   } else {
     err.style.display='block';input.value='';input.focus();
