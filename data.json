@@ -1,17 +1,4 @@
 {
-  "courses": [
-    {
-      "id": "cpp3",
-      "cat": "cpp",
-      "icon": "ti-tournament",
-      "iconClass": "be",
-      "title": "C++ 자료구조 & 알고리즘",
-      "desc": "STL 컨테이너와 정렬·탐색·그래프 알고리즘 실전",
-      "level": "adv",
-      "levelText": "고급",
-      "status": "new",
-      "students": 0
-    }
-  ],
+  "courses": [],
   "students": []
 }
