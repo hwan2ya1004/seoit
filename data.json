@@ -1,18 +1,6 @@
 {
   "courses": [
     {
-      "id": "js",
-      "cat": "web",
-      "icon": "ti-brand-javascript",
-      "iconClass": "web",
-      "title": "JavaScript 심화",
-      "desc": "ES6+, 비동기, DOM 조작 마스터",
-      "level": "inter",
-      "levelText": "중급",
-      "status": "on",
-      "students": 20
-    },
-    {
       "id": "react",
       "cat": "web",
       "icon": "ti-brand-react",
