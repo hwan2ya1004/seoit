@@ -46,7 +46,7 @@
       "level": "inter",
       "levelText": "중급",
       "status": "off",
-      "students": 15
+      "students": 0
     },
     {
       "id": "django",
